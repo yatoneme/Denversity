@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Denversity</title>
+        <style>
+            body{
+                background-color: #caccf8;
+                
+            }
+            .banner{
+                background-color: #caccf8;
+                padding:5px;
+                
+            }
+            .nav{
+                align-items: center;
+                justify-content: space-between;
+                display:flex;
+                width:90%;
+                margin:auto;
+            }
+            .denv{
+                font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                color:rgb(15, 50, 65);
+                
+                
+            }
+            .navbar li{
+                list-style: none;
+                margin:0 30px;
+                display:inline-block;
+                position: relative;
+            }
+            .navbar li a{
+                text-decoration: none;
+                color:rgb(15, 50, 65);
+            }
+            .navbar li ::after{
+                content:"";
+                height:3px;
+                width:0;
+                position:absolute;
+                left:0;
+                bottom:-10px;
+                background-color: aliceblue;
+                transition: 1s;
+            }
+            .navbar li :hover::after{
+                width:100%;
+            }
+            .cp{
+                color:rgb(15, 50, 65);
+                margin-left:110px;
+                margin-top: -20px;
+                display:flex;
+                padding:6px;
+                font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+                font-style: italic;
+            }
+            .welc{
+                margin-left:100px;
+                margin-top:150px;
+                font-size: 5vh;
+                font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                color:rgb(15, 50, 65);
+                
+            }
+            .intro{
+                margin-left:100px;
+                margin-right:800px;
+                font-size:large;
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                
+            }
+            .pic{
+                width:50%;
+                margin-left: 50%;
+                margin-top:-15%;
+            }
+            .about h2{
+                margin-left:100px;
+                margin-top:150px;
+                font-size: 5vh;
+                font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+                color:rgb(15, 50, 65);}
+            .about p{
+                font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+                font-size:large;
+                margin-left: 100px;
+                margin-right:900px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="banner">
+            <div class="nav">
+                <h1 class="denv">Denversity</h1>
+                <ul class="navbar">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Universities</a></li>
+                    <li><a href="#">Sign In</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <p class="cp">~High quality dental care at no cost</p>
+            
+        </div>
+        <div class="page">
+            <h1 class="welc"> Welcome to Denversity</h1>
+            <p class="intro">Navigate through the countless university options and benefit from the expertise of eager dental students by booking your next dental appointment at your desired time.</p>
+            <img class="pic" src="dentt.png" alt="dentist treating a patient">
+        </div>
+        <div class="about">
+            <h2>About Us:</h2>
+            <p>Denversity is operated by dentistry students, under the supervision of experienced dental professionals. By imposing their expertise and knowledge, these future dentists provide high quality dental care, ranging from check-ups to complex procedures. This website empowers individuals to easily schedule appointments and receive professional dental treatment without worrying about expenses. Denversity connects patients and dental students seeking hands on experience and exposure to a diverse range of cases. With just a few clicks, users can navigate through the platform and book appointments at their preferred university.</p>
+        </div>
+       
+        
+    </body>
+</html>
