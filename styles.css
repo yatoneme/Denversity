@@ -31,9 +31,7 @@
 }
 .denv{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color:rgb(15, 50, 65);
-    
-    
+    color:rgb(15, 50, 65);   
 }
 .navbar li{
     list-style: none;
@@ -131,4 +129,47 @@ a :hover{
 }     
 .services{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-} 
+}
+.docbody{
+    background-color: #caccf8;
+}
+.logout{
+    border-radius: 30px;
+    background-color:#caccf8;
+    margin: 5px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    cursor: pointer;
+}
+.profile{
+    background: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    height: 670px;
+    margin-top: 15px;
+    margin-left: 60px;
+    position: relative;
+    width: 90%;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+.profimg{
+    border-radius: 60%;
+    width:36%;
+    margin-left: 25%;
+    margin-top:-40%;
+    margin-bottom: 20%;;
+}
+.details{
+    float:left;
+    margin-top:40%;
+    margin-left:-40%;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.status h2{
+    background-color: #caccf8;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.status{
+    margin-top:25%;
+}
