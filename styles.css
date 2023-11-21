@@ -26,8 +26,7 @@
     background-color: #f9f9fe;
     padding:5px;
     display: block;
-    background: linear-gradient(90deg, rgba(251, 251, 253, 0.373) 0%, rgba(170,181,255,0.5215336134453781) 53%);
-        
+    background: linear-gradient(90deg, rgba(251, 251, 253, 0.373) 0%, rgba(170,181,255,0.5215336134453781) 53%);       
 }
 .nav{
     padding: 0% 0% ;
@@ -35,10 +34,6 @@
      display: flex;
     align-items: center;
     justify-content: space-between ;
-}
-.denv{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    color:rgb(15, 50, 65);   
 }
 .navbar li{
     list-style: none;
@@ -106,7 +101,7 @@ a :hover{
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .docbody{
-    background-color: #caccf8;
+    background-color: #ffffff;
 }
 .logout{
     border-radius: 30px;
@@ -118,7 +113,7 @@ a :hover{
 .profile{
     background: #ffffff;
     border-radius: 10px;
-    display: flex;
+    
     height: 670px;
     margin-top: 15px;
     margin-left: 60px;
@@ -133,24 +128,15 @@ a :hover{
     border-radius: 60%;
     width:36%;
     margin-left: 25%;
-    margin-top:-40%;
+    margin-top:15%;
     margin-bottom: 20%;;
+    
 }
 .details{
     float:left;
     margin-top:40%;
     margin-left:-40%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-}
-.status h2{
-    background-color: #caccf8;
-    text-align: center;
-    padding: 10px;
-    border-radius: 5px;
-}
-.status{
-    margin-top:25%;
-    text-align: center;
 }
 .loginbody{
     text-align:center;
@@ -160,6 +146,7 @@ a :hover{
     background-size: cover;
 }
 .loginimg{
+    margin-top:50px;
     width: 17%;
 }
 label{
@@ -188,6 +175,16 @@ button {
     margin:10px;
 }
 .apts{
-    display: inline-block;
     text-align: center;
+}
+.status h2{
+    background-color: #caccf8;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 8px;
+}
+.statustable{
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
 }
