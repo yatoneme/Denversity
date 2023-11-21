@@ -1,12 +1,18 @@
 .frontbody{
     background: #caccf8; 
+    background-image: url(images/white.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .categoriesbody{
     text-align: center;
     background-color: #caccf8;
+    background-image: url(images/white.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .card{
-    background: #ffffff;
+    background: rgb(238, 232, 250);
     border-radius: 10px;
     display: inline-block;
     height: 220px;
@@ -14,20 +20,21 @@
     position: relative;
     width: 400px;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    border-style:groove;
 }
 .banner{
-    background-color: #caccf8;
+    background-color: #f9f9fe;
     padding:5px;
     display: block;
-    background: linear-gradient(90deg, rgba(63,94,251,0.37307422969187676) 0%, rgba(170,181,255,0.5215336134453781) 53%);
+    background: linear-gradient(90deg, rgba(251, 251, 253, 0.373) 0%, rgba(170,181,255,0.5215336134453781) 53%);
         
 }
 .nav{
+    padding: 0% 0% ;
+    flex: 1;
+     display: flex;
     align-items: center;
-    justify-content: space-between;
-    display:flex;
-    width:90%;
-    margin:auto;
+    justify-content: space-between ;
 }
 .denv{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -42,6 +49,9 @@
 .navbar li a{
     text-decoration: none;
     color:rgb(15, 50, 65);
+    font-weight:300;
+    font-size: 15px;
+    font-family: 'Poppins', sans-serif  ;
 }
 .navbar li ::after{
     content:"";
@@ -51,7 +61,7 @@
     left:0;
     bottom:-10px;
     background-color: aliceblue;
-    transition: 1s;
+    transition: 0.5s;
 }
 .navbar li :hover::after{
     width:100%;
@@ -64,41 +74,6 @@
     padding:6px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-style: italic;
-}
-.welc{
-    margin-left:100px;
-    margin-top:150px;
-    font-size: 5vh;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color:rgb(15, 50, 65);
-    
-}
-.intro{
-    margin-left:100px;
-    margin-right:800px;
-    font-size:large;
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    
-}
-.pic{
-    width:50%;
-    margin-left: 50%;
-    margin-top:-15%;
-}
-.about h2{
-    margin-left:100px;
-    margin-top:150px;
-    font-size: 5vh;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    color:rgb(15, 50, 65);}
-.about p{
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size:large;
-    margin-left: 100px;
-    margin-right:900px;
-}
-.page{
-    align-items: left;
 }
 .btn{
     font-size: large;
@@ -150,6 +125,9 @@ a :hover{
     position: relative;
     width: 90%;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-image: url(images/white.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .profimg{
     border-radius: 60%;
@@ -172,4 +150,44 @@ a :hover{
 }
 .status{
     margin-top:25%;
+    text-align: center;
+}
+.loginbody{
+    text-align:center;
+    background-color: rgb(243, 245, 253);
+    background-image:url(images/white.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.loginimg{
+    width: 17%;
+}
+label{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 5px;
+    font-size: large;
+    color: rgb(108, 126, 192);
+}
+button {
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: larger;
+    width: 90px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-color: rgb(0, 0, 0);
+    background-color: rgb(195, 180, 208)
+}
+.field{
+    padding: 5px;
+    border-radius: 10px;
+    border-color: rgb(0, 0, 0);
+    border-width: 3px;
+    font-size: large;
+    background-color: rgb(254, 254, 255);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin:10px;
+}
+.apts{
+    display: inline-block;
+    text-align: center;
 }
