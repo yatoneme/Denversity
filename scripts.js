@@ -16,3 +16,10 @@ function login() {
         alert("Wrong Email and Password");
     }
 }
+document.getElementById("name").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("number").value = "";
+                document.getElementById("bd").value = "";
+                document.getElementById("check").value = "";
+                document.getElementById("uni").value = "";
+                document.getElementById("notes").value = "";
