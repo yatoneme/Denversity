@@ -376,23 +376,19 @@ button {
     background-color: rgb(224, 232, 247);
 }
 .all{
-   
     position: relative;
     max-width: 700px; 
     width: 100%;
     background: white;
     padding: 90px;
     border-radius: 8px;
-    
-   }
-   .all header{
+}
+.all header{
     font-size: 40px;
     color: rgb(11, 69, 71);
     font-weight: 500;
     text-align: center;
-    /*padding-bottom: 7%;
-    margin-top: -5%;*/
-   }
+}
 .all form{
   margin-top: 40px;
 }
@@ -402,7 +398,6 @@ button {
 }
 .input-box label{
   color: #333;
-
 }
 .form .input-box input{
   position:relative ;
@@ -429,14 +424,14 @@ button {
 .gender label{
   color: gray;
 }
- .genderoption, .gender {
+.genderoption, .gender {
   display: flex;
   align-items: center;
   column-gap: 9%;
 }
 .gender-check h3{
   color: #333;
-  font-size: 17px;
+  font-size: 22px;
   font-weight: 400;
   margin-bottom: 8px;
 }
@@ -462,6 +457,7 @@ button {
   border: none;
   color: gray;
   font-size: 14px;
+  cursor: pointer;
 }
 .form button{
   margin-left: 25%;
@@ -483,3 +479,19 @@ button {
 .form button:hover{
   background-color: rgb(156, 204, 217) ;
 }
+.appttime{
+    cursor:pointer;
+    margin-top: 20px;
+}
+.appttime label{
+    color: #333;
+}
+input[type=time] {
+    border-radius: 7px;
+    color: #a1a9ad;
+    font-size: 17px;
+    text-align: center;
+    width: 180px;
+    cursor: pointer;
+    border-color: #e0e5e7;
+  }
