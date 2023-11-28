@@ -293,7 +293,6 @@ a :hover{
 .profile{
     background: #ffffff;
     border-radius: 10px;
-    
     height: 670px;
     margin-top: 15px;
     margin-left: 60px;
@@ -494,4 +493,11 @@ input[type=time] {
     width: 180px;
     cursor: pointer;
     border-color: #e0e5e7;
+  }
+  .dummydata, .dummydata2{
+    text-align: left;
+    background-color: rgb(225, 233, 239);
+    border-radius: 10px;
+    border-style:solid;
+    border-color:#c4cdd2;
   }
