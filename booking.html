@@ -10,7 +10,7 @@
 <body class="bookbody">
       <section class="all">
         <header>Book Your Appointment:</header>
-        <form id="registration-form" class="form">
+        <form onsubmit="sendform()" id="registration-form" class="form">
             <div class="input-box">
                 <label>Full Name</label>
                 <input type="text" id="name" placeholder="Enter full name" required>
@@ -71,7 +71,7 @@
                 <label>Notes</label>
                 <input type="text" id="notes" placeholder="Describe your problem.." >
             </div>
-            <button class="sbmtbtn" onclick="popup()" type="submit">Submit</button>
+            <button class="sbmtbtn" id="sub" onclick="popup()" type="submit">Submit</button>
         </form>
 		</section>
 		</body>

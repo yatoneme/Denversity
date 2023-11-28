@@ -16,42 +16,40 @@ function login() {
         alert("Wrong Email and Password");
     }
 }
-
-document.getElementById("name").value = "";
-document.getElementById("email").value = "";
-document.getElementById("number").value = "";
-document.getElementById("bd").value = "";
-document.getElementById("check").value = "";
-document.getElementById("uni").value = "";
-document.getElementById("notes").value = "";
-document.getElementById("timee").value="";
-
 function popup(){
-alert('Submitted Succesfully')
-}
+alert('Submitted Succesfully');
+};
+sub.addEventListener("click", function(){ window.location.replace("front.html");});
 
-var data=[];
-var n=1;
-var x=0;
+var sub=document.getElementById("sub");
+sub.addEventListener("click",sendform);
+
+var row=1;
 function sendform(){ //should send form data to doctors.html and display it in a paragraph in the pending column
-var addcell=document.getElementById('form')
-var fullname=document.getElementById("name")
-var email=document.getElementById("email")
-var phone=document.getElementById("number")
-var bday=document.getElementById("bd")
-var gender=document.getElementById("check")
-var time=document.getElementById("timee")
-var uni=document.getElementById("uni")
-var notes=document.getElementById("notes")
+var fullname=document.getElementById("name").value;
+var email=document.getElementById("email").value;
+var phone=document.getElementById("number").value;
+var bday=document.getElementById("bd").value;
+var gender=document.getElementById("check").value;
+var time=document.getElementById("timee").value;
+var uni=document.getElementById("uni").value;
+var notes=document.getElementById("notes").value;
+var taable=document.getElementById("taable");
+var nRow=taable.insertRow(row);
+var cell=nRow.insertCell(0);
+cell.innerTHML=document.getElementById[name,email,number,bd,check,timee,uni,notes];
+row++;
 }
-function showapptname(){ //should show case name on top of the booking page
-   //windowlocation.href="/categories.html"+ev.target.innerhtml
-}
+function showapptname(){ /*should show case name on top of the booking page
+   window.location.href="/categories.html"+ev.target.innerhtml
+*/
+let aptname= document.getElementById()
+};
 function acceptappt(){ //checkmark for accepting appts
 
-}
+};
 function completeappt(){ //checkmark for completion
 
-}
+};
 // optional functions
 // deleteappt()
