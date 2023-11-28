@@ -23,7 +23,7 @@ sub.addEventListener("click", function(){ window.location.replace("front.html");
 
 var sub=document.getElementById("sub");
 sub.addEventListener("click",sendform);
-
+var data=[name,email,number,bd,check,timee,uni,notes];
 var row=1;
 function sendform(){ //should send form data to doctors.html and display it in a paragraph in the pending column
 var fullname=document.getElementById("name").value;
