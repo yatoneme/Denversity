@@ -17,29 +17,13 @@ function login() {
     }
 }
 function popup(){
-alert('Submitted Succesfully');
+    // alert('Submitted Succesfully');
 };
-sub.addEventListener("click", function(){ window.location.replace("front.html");});
+// sub.addEventListener("click", function(){ window.location.replace("front.html");});
 
-var sub=document.getElementById("sub");
-sub.addEventListener("click",sendform);
-var data=[name,email,number,bd,check,timee,uni,notes];
+// var data=[name,email,number,bd,check,timee,uni,notes];
 var row=1;
-function sendform(){ //should send form data to doctors.html and display it in a paragraph in the pending column
-var fullname=document.getElementById("name").value;
-var email=document.getElementById("email").value;
-var phone=document.getElementById("number").value;
-var bday=document.getElementById("bd").value;
-var gender=document.getElementById("check").value;
-var time=document.getElementById("timee").value;
-var uni=document.getElementById("uni").value;
-var notes=document.getElementById("notes").value;
-var taable=document.getElementById("taable");
-var nRow=taable.insertRow(row);
-var cell=nRow.insertCell(0);
-cell.innerTHML=document.getElementById[name,email,number,bd,check,timee,uni,notes];
-row++;
-}
+
 function showapptname(){ /*should show case name on top of the booking page
    window.location.href="/categories.html"+ev.target.innerhtml
 */
@@ -53,3 +37,81 @@ function completeappt(){ //checkmark for completion
 };
 // optional functions
 // deleteappt()
+
+
+
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDjy4NSv68_sufMAP5yLw0j8zCt7JzMxeI",
+//     authDomain: "restaurant-803b1.firebaseapp.com",
+//     projectId: "restaurant-803b1",
+//     storageBucket: "restaurant-803b1.appspot.com",
+//     messagingSenderId: "852933597028",
+//     appId: "1:852933597028:web:290277457034f5a74b4c71",
+//     measurementId: "G-Q7Y9M5BKK4"
+// };
+
+// const app = firebase.initializeApp(firebaseConfig);
+// const db = app.firestore();
+// db.settings({ timestampsInSnapshots: true });
+// const plates = db.collection('plates');
+// const platesAdded = []
+// // CRUD - Create Read Update Delete // 4 operations
+// // read
+// const platesDocument = plates.get().then(initPlates);
+
+
+// // get one document by id
+// //        plates.doc(platesAdded[0].id)
+
+
+// // function sum(a,b, callback){
+// //     callback(a+b);
+// // }
+// // function print(val){
+// //     console.log(val);
+// // }
+
+// // sum(a, b, print);
+// function initPlates(documents){
+// documents.docs.forEach(document => {
+//     const newPlate = {
+//         ...document.data(),
+//         id: document.id
+//     };
+
+//     platesAdded.push(newPlate);
+//     console.log(document.data());
+//     console.log(document.id);
+//     // display on table or anything...
+// });
+
+// // create
+// const newPlate = {
+//     price: 50,
+//     name: 'Pizza',
+//     size: 'large',
+//     currency: '$',
+// };
+
+// // plates.add(newPlate)
+
+// // update
+// plates.doc(platesAdded[5].id).update({
+//     price: 5,
+//     name: 'Pizza',
+//     size: 'small',
+//     currency: '$',
+// });
+
+// // delete
+// // plates.doc(platesAdded[5].id).delete();
+// }
+
+window.onload = () => {
+    const queryString = window.location.search;
+    const params = new URLSearchParams(queryString);
+
+    if(params.get('successfulAppointment') && document.referrer != ''){
+        setNotification(true)
+    }
+}
