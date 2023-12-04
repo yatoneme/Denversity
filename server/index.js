@@ -15,7 +15,7 @@ const corsOptions = {
 initializeFirebase()
 
 app.use(cors(corsOptions))
-app.use(express.json()) // body-parser is now deprecated as of Express 4.16+
+app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use('/appointment', Appointment)
 app.use('/categories', Categories)
