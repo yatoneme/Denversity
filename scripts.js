@@ -1,3 +1,62 @@
+function unilogin() {
+    var email = document.getElementById("email").value;
+    var password = document.getElementById("password").value;
+    if (email === "") {
+        alert("Please Enter Email");
+        return;
+    }
+    else if (password === "") {
+        alert("Please Enter Password");
+        return;
+    }
+    if (email === "uni@mail.com" && password === "1534") {
+        window.location.replace("university.html");
+    }
+    else {
+        alert("Wrong Email and Password");
+    }
+}
+
+var studentData = [];
+
+function savedata() {
+  event.preventDefault();
+
+  var AddRown = document.getElementById('std_data');
+  var currentIndex = studentData.length;
+
+  var student = {
+    name: document.getElementById("sname").value,
+    number: document.getElementById("snumber").value,
+    email: document.getElementById("semail").value,
+    password: document.getElementById("spassword").value
+  };
+
+  studentData.push(student);
+
+  var NewRow = AddRown.insertRow(currentIndex + 1);
+
+  var cel1 = NewRow.insertCell(0);
+  var cel2 = NewRow.insertCell(1);
+  var cel3 = NewRow.insertCell(2);
+  var cel4 = NewRow.insertCell(3);
+  var cel5 = NewRow.insertCell(4);
+
+  cel1.innerHTML = student.name;
+  cel2.innerHTML = student.number;
+  cel3.innerHTML = student.email;
+  cel4.innerHTML = student.password;
+  cel5.innerHTML = '<input type="button" name="Del" value="Delete" onclick="delStudent(this.parentNode.parentNode);" class="btn btn-danger">';
+  
+  document.getElementById("regform").reset();
+}
+
+function delStudent(rowToDelete) {
+  var index = rowToDelete.rowIndex - 1;
+  studentData.splice(index, 1);
+  rowToDelete.parentNode.removeChild(rowToDelete);
+}
+
 
 function popup(){
     // alert('Submitted Succesfully');
@@ -20,18 +79,6 @@ function completeappt(){ //checkmark for completion
 };
 // optional functions
 // deleteappt()
-
-
-
-// const firebaseConfig = {
-//     apiKey: "AIzaSyDjy4NSv68_sufMAP5yLw0j8zCt7JzMxeI",
-//     authDomain: "restaurant-803b1.firebaseapp.com",
-//     projectId: "restaurant-803b1",
-//     storageBucket: "restaurant-803b1.appspot.com",
-//     messagingSenderId: "852933597028",
-//     appId: "1:852933597028:web:290277457034f5a74b4c71",
-//     measurementId: "G-Q7Y9M5BKK4"
-// };
 
 // const app = firebase.initializeApp(firebaseConfig);
 // const db = app.firestore();

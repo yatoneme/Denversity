@@ -479,7 +479,7 @@ button {
   background-color: rgb(156, 204, 217) ;
 }
 .appttime{
-    cursor:pointer;
+    cursor:pointer; 
     margin-top: 20px;
 }
 .appttime label{
@@ -493,11 +493,80 @@ input[type=time] {
     width: 180px;
     cursor: pointer;
     border-color: #e0e5e7;
-  }
-  .dummydata, .dummydata2{
+}
+.dummydata, .dummydata2{
     text-align: left;
     background-color: rgb(225, 233, 239);
     border-radius: 10px;
     border-style:solid;
     border-color:#c4cdd2;
-  }
+}
+.uniloginbody{
+    text-align: center;
+    background-image: url("images/bg.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.unilogin{
+    width: 30%;
+}
+.input{
+    padding:10px;
+}
+.unipageheader{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-left:80px;
+    color:#383c4d;
+    margin-top:20px;
+}
+.uniform label{
+    color:rgb(2, 0, 8);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.uniform{
+    border-radius: 15px;
+    margin-left:15px;
+    float:left;
+    background-color:rgb(241 234 234 /70%);
+}
+.uniform input{
+    border-radius: 3px;
+    width: 90%;
+    padding:7px;
+}
+.container{
+    float:left;
+}
+.addbtn{
+    background-color: #ffffff;
+    margin-left:127px;
+    cursor: pointer;
+    margin-bottom: 8px;
+}
+.std_data_table{
+    float: right;
+    margin-right:300px;
+}
+.std_data_table h2{
+    margin-top:-45px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color:#383c4d;
+    margin-left:160px;
+}
+.std_data_table th, td{
+    border: 2px solid gray;
+    padding:5px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.std_data{
+    border-collapse: collapse;
+}
+.unilog{
+    background-color: #bbdaeb;
+}
+.unibody{
+    margin-left:80px;
+    background-image: url("images/bg3.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
