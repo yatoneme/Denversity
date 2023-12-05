@@ -9,20 +9,36 @@ window.onload = () => {
 
     const caseType = document.getElementById("header-case-type")
     caseType.innerHTML = "Type: " + localStorage.getItem('currentCategory')
+
+    fetch('http://localhost:3000/universities', {
+        method: "GET",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json()).then(data => renderUniversityList(data))
+}
+
+function renderUniversityList({ data }) {
+    const uniList = document.getElementById('uni-options')
+    data.map(({ name, link, address }, idx) => {
+        const uniOption = document.createElement('option')
+        uniOption.value = name
+        uniOption.title = name + ": " + address
+        uniOption.innerHTML = name
+
+        uniList.appendChild(uniOption);
+    })
 }
 
 var sub=document.getElementById("sub");
+
 sub.addEventListener("click",sendform);
+
 function sendform(e){ //should send form data to doctors.html and display it in a paragraph in the pending column
     e.preventDefault();
     sub.disabled = true;
 
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-
-    // where is date of appointment ?
-    // where is doctors page ?
-    // where is doctors registeration page ?
     const appointment = {
         "fullname": document.getElementById("name").value,
         "email": document.getElementById("email").value,
@@ -30,7 +46,7 @@ function sendform(e){ //should send form data to doctors.html and display it in 
         "birthday": document.getElementById("bd").value,
         "gender": document.getElementById("check").value,
         "time": document.getElementById("timee").value,
-        "university_name": document.getElementById("uni").value,
+        "university_name": document.getElementById("uni-options").value,
         "problem_description": document.getElementById("notes").value,
         "problem_category": localStorage.getItem('currentCategory')
     }

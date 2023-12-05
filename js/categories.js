@@ -9,7 +9,6 @@ window.onload = () => {
 }
 
 function renderCategoryPage({ data }) {
-    console.log(data);
     const catBody = document.getElementsByClassName("categoriesbody")[0]
 
     data.map(({ name, description }, idx) => {

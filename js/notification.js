@@ -1,7 +1,12 @@
-function setNotification(data) {
+const defaultText = {
+    success: "Appointment is successfully sent!",
+    fail: "Sorry, an error has occured"
+}
+
+function setNotification(data, text) {
     const notification = document.getElementById("notification");
     notification.querySelector("#text").innerHTML = 
-    data ? "Appointment is successfully sent!" : "Sorry, an error has occured"
+    text ? text : data ? defaultText.success : defaultText.fail
 
     notification.dataset.status = data ? "success" : "failed"
     if(!data)

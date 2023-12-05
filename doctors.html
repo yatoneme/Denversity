@@ -3,60 +3,66 @@
 	<head>
 		<title>My profile</title>
 		<link rel="stylesheet" href="styles.css">
-		<script src="scripts.js"></script>
     </head>
-		<body class="docbody">
-				<div class="banner">
-					<div class="nav">
-						<img src="images/logoo.png" class="logooo" alt="logo">
-						<ul class="navbar">
-							<li><a href="front.html">Home</a></li>
-							<li><a href="categories.html">Services</a></li>
-							<li><a href="#">Universities</a></li>
-							<li><a href="#">Contact</a></li>
-                            <li><a href="front.html"><button class="logout">Logout</button></a></li>
-						</ul>
-					</div>
-				</div>
-                <div class="profile">
-                    <table id="taable">
-                        <tr>
-                            <td>
-                                <img src="images/anon.png" alt="profile" class="profimg">
-                            </td>
-                            <td class="details">
-                               <h3>Dr.(name)</h3>
-                               <h3>Email: drdr@gmail.com</h3>
-                               <h3>University:(uni)</h3>
-                            </td>
-                        </tr>
+    <body class="docbody">
+        <div class="banner">
+            <div class="nav">
+                <img src="images/logoo.png" class="logooo" alt="logo">
+                <ul class="navbar">
+                    <li><a href="front.html">Home</a></li>
+                    <li><a href="categories.html">Services</a></li>
+                    <li><a href="#">Universities</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="front.html"><button class="logout">Logout</button></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="profile">
+            <table id="taable">
+                <tr>
+                    <td>
+                        <img src="images/anon.png" alt="profile" class="profimg">
+                    </td>
+                    <td class="details">
+                        <h3>Dr.(name)</h3>
+                        <h3>Email: drdr@gmail.com</h3>
+                        <h3>University:(uni)</h3>
+                    </td>
+                </tr>
+            </table>
+            <div class="status">
+                <h1 class="apts">My Appointments</h1>
+                <div class="statustble">
+                    <table class="statustable">
+                <tr>
+                <th><h2>Pending</h2></th>
+                <th><h2>Accepted</h2></th>
+                <th><h2>Completed</h2></th>
+            </tr>
+            <tr>
+                <th class="dummydata">
+                    <h4>(general dentistry)</h4>
+                    <p>Jewel Park, 21, F, 2:30pm</p>
+                    <p>I have trouble with my bottom jaw</p>
+                </th>
+            </tr>
+            <tr>
+                <th class="dummydata2">
+                    <h4>Pediatrics</h4>
+                    <p>Sam Wellington, 13, M, 3:00pm</p>
+                    <p>lots of pain, need a checkup</p>
+                </th>
+                
+            </tr>
                     </table>
-                    <div class="status">
-                        <h1 class="apts">My Appointments</h1>
-                        <div class="statustble">
-                            <table class="statustable">
-                        <tr>
-                        <th><h2>Pending</h2></th>
-                        <th><h2>Accepted</h2></th>
-                        <th><h2>Completed</h2></th>
-                    </tr>
-                    <tr>
-                        <th class="dummydata">
-                            <h4>(general dentistry)</h4>
-                            <p>Jewel Park, 21, F, 2:30pm</p>
-                            <p>I have trouble with my bottom jaw</p>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="dummydata2">
-                            <h4>Pediatrics</h4>
-                            <p>Sam Wellington, 13, M, 3:00pm</p>
-                            <p>lots of pain, need a checkup</p>
-                        </th>
-                        
-                    </tr>
-                            </table>
-                        </div>
-                    </div>
                 </div>
-			
+            </div>
+        </div>
+    
+        <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js'></script>
+        <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js'></script>
+        <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js'></script>    
+        <script src="js/firebase.js"></script>
+        <script src="js/doctors.js"></script>
+    </body>
+</html>

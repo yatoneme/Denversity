@@ -1,21 +1,4 @@
-function login() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    if (email === "") {
-        alert("Please Enter Email");
-        return;
-    }
-    else if (password === "") {
-        alert("Please Enter Password");
-        return;
-    }
-    if (email === "drdr@mail.com" && password === "1111") {
-        window.location.replace("doctors.html");
-    }
-    else {
-        alert("Wrong Email and Password");
-    }
-}
+
 function popup(){
     // alert('Submitted Succesfully');
 };
@@ -111,7 +94,31 @@ window.onload = () => {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
 
-    if(params.get('successfulAppointment') && document.referrer != ''){
+    
+    if(params.get('successfulAppointment') && document.referrer !== '' && document.referrer !== window.location.href){
         setNotification(true)
     }
+
+    fetch('http://localhost:3000/universities', {
+        method: "GET",
+        mode: "cors",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then(res => res.json()).then(data => renderUniversities(data))
+}
+
+function renderUniversities({ data }) {
+    const uniList = document.getElementsByClassName('university-list')[0]
+    data.map(({ name, link }, idx) => {
+        const cell = document.createElement('li')
+        const uniLink = document.createElement('a')
+
+        uniLink.href = link
+        uniLink.target = "_blank"
+        uniLink.innerHTML = name
+
+        cell.appendChild(uniLink);
+        uniList.appendChild(cell);
+    })
 }
