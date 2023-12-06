@@ -334,7 +334,7 @@ label{
     font-size: large;
     color: rgb(108, 126, 192);
 }
-button {
+/* button {
     border-radius: 10px;
     margin-top: 15px;
     font-size: larger;
@@ -342,7 +342,7 @@ button {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     border-color: rgb(0, 0, 0);
     background-color: rgb(195, 180, 208)
-}
+} */
 .field{
     padding: 5px;
     border-radius: 10px;
@@ -494,7 +494,7 @@ input[type=time] {
     cursor: pointer;
     border-color: #e0e5e7;
 }
-.dummydata, .dummydata2{
+.status-cell{
     text-align: left;
     background-color: rgb(225, 233, 239);
     border-radius: 10px;
@@ -553,7 +553,7 @@ input[type=time] {
     color:#383c4d;
     margin-left:160px;
 }
-.std_data_table th, td{
+.std_data_table th, .std_data_table td{
     border: 2px solid gray;
     padding:5px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
@@ -569,4 +569,24 @@ input[type=time] {
     background-image: url("images/bg3.png");
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.acceptBtn, .completeBtn {
+    display: flex;
+    justify-items: center;
+    border: none;
+    border-radius: 20%;
+    cursor: pointer;
+}
+
+.acceptBtn {
+    background: rgb(78, 171, 78);
+}
+
+.completeBtn {
+    background: rgb(171, 132, 78);
+}
+
+.acceptBtn svg, .completeBtn svg {
+    padding: 8px 5px;
 }

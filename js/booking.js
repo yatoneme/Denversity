@@ -48,7 +48,8 @@ function sendform(e){ //should send form data to doctors.html and display it in 
         "time": document.getElementById("timee").value,
         "university_name": document.getElementById("uni-options").value,
         "problem_description": document.getElementById("notes").value,
-        "problem_category": localStorage.getItem('currentCategory')
+        "problem_category": localStorage.getItem('currentCategory'),
+        "on_queue": true
     }
 
     fetch('http://localhost:3000/appointment', {
