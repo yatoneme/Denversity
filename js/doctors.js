@@ -102,7 +102,7 @@ function renderTables(types) {
             // buttons for accepting cases and completing cases
             if(class_type !== "completed"){
                 const acceptBtn = document.createElement('button')
-                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(patient.id) : completeCase(patient.id)
+                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(acceptBtn, patient.id) : completeCase(acceptBtn, patient.id)
                 acceptBtn.className = class_type === "pending" ? "acceptBtn" : "completeBtn"
                 acceptBtn.innerHTML = '<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>'
                 button_container.appendChild(acceptBtn)
@@ -131,7 +131,10 @@ function updateDoctorDisplay(doctor) {
     container.appendChild(university)
 }
 
-function acceptCase(caseId) {
+function acceptCase(button, caseId) {
+    button.disabled=true;
+    button.style.fontSize = "25px";
+    button.style.background = 'grey';
     firebase.auth().onAuthStateChanged( user => {
         if(!user)
         {
@@ -154,10 +157,11 @@ function acceptCase(caseId) {
             }).then(res => res.json()).then(data => {
                 if(!data)
                 {
-                    // TODO: notification false
+                    setNotification(false, "Cannot accept that appointment!")
                     return
                 }
- 
+                setNotification(true, "Appointment is accepted, an email is sent to the patient!")
+                
                 const { general, ...appointments } = data
                 renderTables(appointments)
 
@@ -168,7 +172,10 @@ function acceptCase(caseId) {
 }
 
 
-function completeCase(caseId) {
+function completeCase(button, caseId) {
+    button.disabled=true;
+    button.style.fontSize = "25px";
+    button.style.background = 'grey';
     firebase.auth().onAuthStateChanged( user => {
         if(!user)
         {
@@ -191,10 +198,11 @@ function completeCase(caseId) {
             }).then(res => res.json()).then(data => {
                 if(!data)
                 {
-                    // notification false
+                    setNotification(false, "Cannot complete that appointment!")
                     return
                 }
- 
+                setNotification(true, "Appointment is completed, well done!")
+
                 const { general, ...appointments } = data
                 renderTables(appointments)
 

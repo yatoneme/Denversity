@@ -88,7 +88,7 @@ function savedata() {
         setNotification(true, `${doctor.email} is added`)        
     }, (reason_not_stored) => {
         if(reason_not_stored === 409)
-            setNotification(false, 'Email already exists!')
+            setNotification(false, 'Email is already used!')
         else
             setNotification(false, 'Unknown error!')
     }).catch(e => {
@@ -132,7 +132,7 @@ function storeNewDoctor(doctor) {
 }
 
 function delStudent(doctor_name, doctor_email, rowToDelete) {
-    const canDelete = confirm(`You sure you want to delete the following student: ${doctor_name}?`)
+    const canDelete = confirm(`You sure you want to delete the following student: ${doctor_name}? This change cannot be undone.`)
 
     if(!canDelete)
         return
@@ -156,8 +156,10 @@ function delStudent(doctor_name, doctor_email, rowToDelete) {
                 return
             }
 
-            if(res.ok)
+            if(res.ok){
                 updateTable(rowToDelete)
+                setNotification(true, `Student: ${doctor_email} is removed!`)
+            }
         }).catch(e => {
             console.error(e)
             setNotification(false, 'Sorry, and error has occured!')
