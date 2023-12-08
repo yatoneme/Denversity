@@ -26,17 +26,14 @@ window.onload = () => {
     })
 }
 
-function renderTables(data) {
+function renderTables(types) {
     const tbody = document.getElementById("status-table-body")
     tbody.innerHTML = ""
-    const max_col =  Math.max(...Object.keys(data).map(el => data[el].length))
+    const max_col =  Math.max(...Object.keys(types).map(el => types[el].length))
 
-    console.log(data);
-    Object.keys(data).forEach((type, idx) => {
-        const patients = data[type]
+    Object.keys(types).forEach(type => {
+        const patients = types[type]
         const class_type = type.split("_")[0]
-        console.log(class_type);
-
 
         for(let i = 0; i < max_col; i++) {
             const patient = patients[i]
@@ -46,7 +43,6 @@ function renderTables(data) {
 
             if(!row)
             {
-                console.log("w");
                 row = document.createElement('tr')
                 row.id = `trow-status-${i+1}`
                 tbody.appendChild(row)
@@ -57,7 +53,7 @@ function renderTables(data) {
                 cell.className = "empty-cell"
                 cell.id = `${class_type}-${i+1}`
                 row.appendChild(cell)
-                break
+                continue
             }
     
             const today = new Date();
@@ -81,8 +77,8 @@ function renderTables(data) {
     
             category.innerHTML = patient.problem_category
             patientDetails.innerHTML = `${patient.fullname}, ${age}, ${patient.gender}`
-            schedule.innerHTML = scheduleTime
-            description.innerHTML = patient.problem_description
+            schedule.innerHTML = `Schedule: ${patient.appointment_date}, at: ${scheduleTime}`
+            description.innerHTML = `Description: ${patient.problem_description}`
     
             cell.className = "status-cell"
             cell.id = `${class_type}-${i+1}`
@@ -97,7 +93,7 @@ function renderTables(data) {
             // buttons for accepting cases and completing cases
             if(class_type !== "completed"){
                 const acceptBtn = document.createElement('button')
-                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(patient.id) : null
+                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(patient.id) : completeCase(patient.id)
                 acceptBtn.className = class_type === "pending" ? "acceptBtn" : "completeBtn"
                 acceptBtn.innerHTML = '<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>'
                 button_container.appendChild(acceptBtn)
@@ -143,7 +139,43 @@ function acceptCase(caseId) {
         }
 
         firebase.auth().currentUser.getIdToken(true).then(token => {
-            fetch(`http://localhost:3000/doctors`, {
+            fetch(`http://localhost:3000/doctors/accept`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    userId: token,
+                    caseId
+                }),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json()).then(data => {
+                if(!data)
+                {
+                    // notification false
+                    return
+                }
+ 
+                const { general, ...appointments } = data
+                renderTables(appointments)
+
+            })
+
+        })
+    })
+}
+
+
+function completeCase(caseId) {
+    firebase.auth().onAuthStateChanged( user => {
+        if(!user)
+        {
+            window.location.href = "signin.html"
+            return false
+        }
+
+        firebase.auth().currentUser.getIdToken(true).then(token => {
+            fetch(`http://localhost:3000/doctors/complete`, {
                 method: "PUT",
                 body: JSON.stringify({
                     userId: token,

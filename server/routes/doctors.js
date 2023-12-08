@@ -16,11 +16,10 @@ const getAppointments = (req, res) => {
             id: data.docs[0].id
         }
 
-        // Same university, 
         db.collection('appointments').where("university_name", "==", doctor.university).get().then(data => {
             const pending_appointments = data.docs.map(doc => ({...doc.data(), id: doc.id })).filter(doc => doc.on_queue)
-            const accepted_appointments = data.docs.map(doc => ({...doc.data(), id: doc.id })).filter(doc => !doc.on_queue && !doc.is_complete)
-            const completed_appointments = data.docs.map(doc => ({...doc.data(), id: doc.id })).filter(doc => doc.is_complete)
+            const accepted_appointments = data.docs.map(doc => ({...doc.data(), id: doc.id })).filter(doc => !doc.on_queue && !doc.is_complete && doc.doctor_email === req.user.email)
+            const completed_appointments = data.docs.map(doc => ({...doc.data(), id: doc.id })).filter(doc => doc.is_complete && doc.doctor_email === req.user.email)
 
             const doctor_data = {
                 general: doctor,
@@ -38,11 +37,7 @@ const getAppointments = (req, res) => {
 
 }
 
-Doctors.post('/', getAppointments)
-
-
-
-Doctors.put('/', (req, res, next) => {
+const updateAppointmentStatus = (req, res, next) => {
     const { caseId } = req.body
     const { user: { email } } = req
 
@@ -54,11 +49,14 @@ Doctors.put('/', (req, res, next) => {
             return res.sendStatus(400)
 
         const doctor = data.docs[0].data()
-
-        db.collection('appointments').doc(caseId).update({
+        const newAppointmentObj = req.path === "/accept" ? {
             doctor_email: doctor.email,
             on_queue: false
-        }).then(() => next())
+        } : {
+            is_complete: true
+        }
+
+        db.collection('appointments').doc(caseId).update(newAppointmentObj).then(() => next())
         .catch(e => {
             console.error(e)
             res.sendStatus(400)
@@ -67,8 +65,11 @@ Doctors.put('/', (req, res, next) => {
         console.error(e)
         res.sendStatus(500)
     })
+}
 
 
-}, getAppointments)
+Doctors.post('/', getAppointments)
+Doctors.put('/accept', updateAppointmentStatus, getAppointments)
+Doctors.put('/complete', updateAppointmentStatus, getAppointments)
 
 module.exports = Doctors;

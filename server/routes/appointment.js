@@ -1,6 +1,7 @@
 const { getFirestore } = require('firebase-admin/firestore')
 const express = require('express')
 const Appointment = express.Router()
+
 Appointment.post('/', (req, res) => {
     const {body: appointment} = req
     const db = getFirestore()

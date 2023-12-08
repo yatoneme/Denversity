@@ -44,6 +44,7 @@ function sendform(e){ //should send form data to doctors.html and display it in 
         "email": document.getElementById("email").value,
         "phone": document.getElementById("number").value,
         "birthday": document.getElementById("bd").value,
+        "appointment_date": document.getElementById("appointment-date").value,
         "gender": document.getElementById("check").value,
         "time": document.getElementById("timee").value,
         "university_name": document.getElementById("uni-options").value,
