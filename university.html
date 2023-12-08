@@ -4,8 +4,19 @@
     <title>University</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="notifications.css">
+    <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js'></script>
+    <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js'></script>
+    <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js'></script>    
+    <script src="js/firebase.js"></script>
+    <script src="js/university.js" defer></script>
+    <script src="js/notification.js"></script>
+    <script src="js/logout.js"></script>
 </head>
 <body class="unibody">
+    <nav id="uni-nav">
+        <p id="welcome-header"></p>
+        <a><button onclick="logout()" class="logout">Logout</button></a>
+    </nav>
     <div class="notification" id="notification" data-status="">
         <div class="identifier">
           <svg data-success="true" xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
@@ -13,43 +24,45 @@
         </div>
         <p class="text" id="text"></p>
     </div>
-    <h2 class="unipageheader">Add student data</h2>
-    <div class="container">
-        <form onsubmit="savedata()" id="regform" class="uniform">
-            <div class="input">
-                <label>Full Name</label>
-                <input type="text" id="sname" placeholder="Enter full name" required>
-            </div>
-            <div class="input">
-                <label>E-mail Address</label>
-                <input type="text" id="semail" placeholder="Enter email address" required>
-            </div>
-            <div class="input">
-                <label>Password</label>
-                <input type="text" id="spassword" placeholder="Enter password" required>
-            </div>
-            <button class="addbtn" type="submit">Add</button>
-        </form>
-    </div>
-    <div class="std_data_table">
-        <h2>Student Data</h2>
-        <table class="std_data" id="std_data">
-            <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Email Address</th>
-                    <th>Password</th>
-                    <th>Delete</th>
-                </tr>     
-            </thead>      
-            <tbody id="std_data-body"></tbody> 
-        </table>
-    </div>
-    <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-app-compat.js'></script>
-    <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore-compat.js'></script>
-    <script src='https://www.gstatic.com/firebasejs/10.5.0/firebase-auth-compat.js'></script>    
-    <script src="js/firebase.js"></script>
-    <script src="js/university.js"></script>
-    <script src="js/notification.js"></script>
+    <main class="main-university">
+        <section class="container">
+            <h2 class="unipageheader">Add student data</h2>
+            <form onsubmit="savedata()" id="regform" class="uniform">
+                <div class="input">
+                    <label>Full Name</label>
+                    <input type="text" id="sname" placeholder="Enter full name" required>
+                </div>
+                <div class="input">
+                    <label>E-mail Address</label>
+                    <input type="text" id="semail" placeholder="Enter email address" required>
+                </div>
+                <div class="input">
+                    <label>Password</label>
+                    <input type="text" id="spassword" placeholder="Enter password" required>
+                </div>
+                <button class="addbtn" type="submit">Add</button>
+            </form>
+        </section>
+        <section class="std_data_table">
+            <h2>Student Data</h2>
+            <table class="std_data" id="std_data">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email Address</th>
+                        <th>Password</th>
+                        <th>Delete</th>
+                    </tr>     
+                </thead>      
+                <tbody id="std_data-body"></tbody> 
+            </table>
+        </section>
+    </main>
 </body>
 </html>
+
+<!-- 
+    TODO:
+    1. Notification is running once, then the animation is stuck!
+    2. Start notification event when a student is deleted!
+-->

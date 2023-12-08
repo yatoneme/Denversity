@@ -17,47 +17,6 @@ function unilogin() {
     }
 }
 
-var studentData = [];
-
-function savedata() {
-  event.preventDefault();
-
-  var AddRown = document.getElementById('std_data');
-  var currentIndex = studentData.length;
-
-  var student = {
-    name: document.getElementById("sname").value,
-    number: document.getElementById("snumber").value,
-    email: document.getElementById("semail").value,
-    password: document.getElementById("spassword").value
-  };
-
-  studentData.push(student);
-
-  var NewRow = AddRown.insertRow(currentIndex + 1);
-
-  var cel1 = NewRow.insertCell(0);
-  var cel2 = NewRow.insertCell(1);
-  var cel3 = NewRow.insertCell(2);
-  var cel4 = NewRow.insertCell(3);
-  var cel5 = NewRow.insertCell(4);
-
-  cel1.innerHTML = student.name;
-  cel2.innerHTML = student.number;
-  cel3.innerHTML = student.email;
-  cel4.innerHTML = student.password;
-  cel5.innerHTML = '<input type="button" name="Del" value="Delete" onclick="delStudent(this.parentNode.parentNode);" class="btn btn-danger">';
-  
-  document.getElementById("regform").reset();
-}
-
-function delStudent(rowToDelete) {
-  var index = rowToDelete.rowIndex - 1;
-  studentData.splice(index, 1);
-  rowToDelete.parentNode.removeChild(rowToDelete);
-}
-
-
 function popup(){
     // alert('Submitted Succesfully');
 };

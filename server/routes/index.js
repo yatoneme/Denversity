@@ -10,7 +10,7 @@ module.exports = (app) => {
     app.use('/universities', Universities)
     app.use('/university', checkAuth, checkRole, University)
     app.use('/categories', Categories)
-    app.use('/doctors', checkAuth, Doctors)
+    app.use('/doctors', checkAuth, checkRole, Doctors)
     app.use('/check-role', checkAuth, checkRole, (_req, res) => res.sendStatus(200))
 }
 

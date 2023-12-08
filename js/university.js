@@ -17,13 +17,23 @@ window.onload = () => {
                 headers: {
                     "Content-Type": "application/json"
                 }
-            }).then(res => res.json()).then(data => {
-                const { university, doctors } = data
+            }).then(res => {
+                if(res.status === 400)
+                {
+                    window.location.href = "universitylogin.html"
+                    return
+                }
+                return res.json()
+            }).then(data => {
+                const { university, doctors, displayName } = data
 
                 if(!university){
                     window.location.href = "universitylogin.html"
                     return
                 }
+
+                const welcome = document.getElementById("welcome-header")
+                welcome.innerHTML = `Welcome, ${displayName}!`
 
                 window.loggedInUniversity = university
 
@@ -43,7 +53,7 @@ function renderDoctorsTable(doctors) {
     if(empty)
         empty.remove()
 
-    if(!doctors)
+    if(!doctors.length)
     {
         const table_container = document.getElementsByClassName('std_data_table')[0]
         const no_data = document.createElement('p')
@@ -53,18 +63,9 @@ function renderDoctorsTable(doctors) {
         no_data.id = "empty-table-row"
         return
     }
-    console.log(doctors);
+
     doctors.forEach(doctor => {
-        const newRow = tbody.insertRow(0);
-        const cel1 = newRow.insertCell(0);
-        const cel2 = newRow.insertCell(1);
-        const cel3 = newRow.insertCell(2);
-        const cel4 = newRow.insertCell(3);
-    
-        cel1.innerHTML = doctor.name;
-        cel2.innerHTML = doctor.email;
-        cel3.innerHTML = "*****";
-        cel4.innerHTML = '<input type="button" name="Del" value="Delete" onclick="delStudent(this.parentNode.parentNode);" class="btn btn-danger">';
+        addToTable(doctor, tbody, 0)
     })
 }
 
@@ -82,16 +83,7 @@ function savedata() {
     };
     
     storeNewDoctor(doctor).then(() => {
-        const newRow = tbody.insertRow(currentIndex);
-        const cel1 = newRow.insertCell(0);
-        const cel2 = newRow.insertCell(1);
-        const cel3 = newRow.insertCell(2);
-        const cel4 = newRow.insertCell(3);
-
-        cel1.innerHTML = doctor.name;
-        cel2.innerHTML = doctor.email;
-        cel3.innerHTML = "*****";
-        cel4.innerHTML = '<input type="button" name="Del" value="Delete" onclick="delStudent(this.parentNode.parentNode);" class="btn btn-danger">';
+        addToTable(doctor, tbody, currentIndex)
         document.getElementById("regform").reset();
         setNotification(true, `${doctor.email} is added`)        
     }, (reason_not_stored) => {
@@ -137,4 +129,76 @@ function storeNewDoctor(doctor) {
             })
         })
     })
+}
+
+function delStudent(doctor_name, doctor_email, rowToDelete) {
+    const canDelete = confirm(`You sure you want to delete the following student: ${doctor_name}?`)
+
+    if(!canDelete)
+        return
+
+    firebase.auth().currentUser.getIdToken(true).then(token => {
+        fetch(`http://localhost:3000/university/doctor`, {
+            method: "DELETE",
+            body: JSON.stringify({
+                userId: token,
+                role: 'university',
+                doctor_email
+            }),
+            mode: "cors",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(res => {
+            if(res.status === 400)
+            {
+                window.location.href = "universitylogin.html"
+                return
+            }
+
+            if(res.ok)
+                updateTable(rowToDelete)
+        }).catch(e => {
+            console.error(e)
+            setNotification(false, 'Sorry, and error has occured!')
+        })
+    })
+}
+
+function updateTable(rowToDelete) {
+    const empty = document.getElementById("empty-table-row")
+    const tbody = document.getElementById("std_data-body")
+
+    rowToDelete.parentNode.removeChild(rowToDelete);
+
+    if(!tbody.childNodes.length)
+    {
+        if(empty)
+            empty.remove()
+
+        const table_container = document.getElementsByClassName('std_data_table')[0]
+        const no_data = document.createElement('p')
+
+        table_container.appendChild(no_data)
+        no_data.innerHTML = "No doctors are added yet!"
+        no_data.id = "empty-table-row"
+        return
+    }
+}
+
+function addToTable(doctor, tbody, atIndex) {
+    const newRow = tbody.insertRow(atIndex);
+    const cel1 = newRow.insertCell(0);
+    const cel2 = newRow.insertCell(1);
+    const cel3 = newRow.insertCell(2);
+    const cel4 = newRow.insertCell(3);
+    const empty = document.getElementById("empty-table-row")
+
+    if(empty)
+        empty.remove()
+
+    cel1.innerHTML = doctor.name;
+    cel2.innerHTML = doctor.email;
+    cel3.innerHTML = "*****";
+    cel4.innerHTML = `<input type="button" name="Del" value="Delete" onclick="delStudent('${doctor.name}', '${doctor.email}', this.parentNode.parentNode);" class="btn btn-danger">`;
 }

@@ -10,13 +10,22 @@ window.onload = () => {
             fetch(`http://localhost:3000/doctors`, {
                 method: "POST",
                 body: JSON.stringify({
-                    userId: token
+                    userId: token,
+                    role: "doctor"
                 }),
                 mode: "cors",
                 headers: {
                     "Content-Type": "application/json"
                 }
-            }).then(res => res.json()).then(data => {
+            }).then(res => {
+                if(!res.ok)
+                {
+                    window.location.href = "signin.html"
+                    return
+                }
+
+                return res.json()
+            }).then(data => {
                 const { general, ...appointments } = data
 
                 updateDoctorDisplay(data.general)
@@ -122,14 +131,6 @@ function updateDoctorDisplay(doctor) {
     container.appendChild(university)
 }
 
-function logout() {
-    firebase.auth().signOut().then(() => {
-        window.location.href = "front.html"
-      }).catch((error) => {
-        console.error(error)
-      });
-}
-
 function acceptCase(caseId) {
     firebase.auth().onAuthStateChanged( user => {
         if(!user)
@@ -143,7 +144,8 @@ function acceptCase(caseId) {
                 method: "PUT",
                 body: JSON.stringify({
                     userId: token,
-                    caseId
+                    caseId,
+                    role: "doctor"
                 }),
                 mode: "cors",
                 headers: {
@@ -152,7 +154,7 @@ function acceptCase(caseId) {
             }).then(res => res.json()).then(data => {
                 if(!data)
                 {
-                    // notification false
+                    // TODO: notification false
                     return
                 }
  
@@ -179,7 +181,8 @@ function completeCase(caseId) {
                 method: "PUT",
                 body: JSON.stringify({
                     userId: token,
-                    caseId
+                    caseId,
+                    role: "doctor"
                 }),
                 mode: "cors",
                 headers: {

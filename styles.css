@@ -293,14 +293,14 @@ a :hover{
 .profile{
     background: #ffffff;
     border-radius: 10px;
-    height: 670px;
+
     margin-top: 15px;
     margin-left: 60px;
     position: relative;
     width: 90%;
     font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     background-image: url(images/white.png);
-    background-repeat: no-repeat;
+    background-repeat: repeat-y;
     background-size: cover;
 }
 .profimg{
@@ -308,13 +308,12 @@ a :hover{
     width:36%;
     margin-left: 25%;
     margin-top:15%;
-    margin-bottom: 20%;;
-    
+    margin-bottom: 20%;
 }
 .details{
     float:left;
-    margin-top:40%;
-    margin-left:-40%;
+    margin-top: 6em;
+    margin-left: -40%;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .loginbody{
@@ -334,15 +333,16 @@ label{
     font-size: large;
     color: rgb(108, 126, 192);
 }
-/* button {
+#signin-btn {
     border-radius: 10px;
     margin-top: 15px;
     font-size: larger;
     width: 90px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     border-color: rgb(0, 0, 0);
-    background-color: rgb(195, 180, 208)
-} */
+    background-color: rgb(195, 180, 208);
+    cursor: pointer;
+}
 .field{
     padding: 5px;
     border-radius: 10px;
@@ -458,7 +458,7 @@ label{
   font-size: 14px;
   cursor: pointer;
 }
-.form button{
+.form #sub{
   margin-left: 25%;
   height: 45px;
   width:40%;
@@ -475,7 +475,7 @@ label{
   cursor: pointer;
   transition: 0.2s ;
 }
-.form button:hover{
+.form #sub:hover{
   background-color: rgb(156, 204, 217) ;
 }
 .appttime{
@@ -534,24 +534,20 @@ input[type=time] {
     width: 90%;
     padding:7px;
 }
-.container{
-    float:left;
-}
 .addbtn{
     background-color: #ffffff;
     margin-left:127px;
     cursor: pointer;
     margin-bottom: 8px;
 }
-.std_data_table{
-    float: right;
-    margin-right:300px;
+.std_data_table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .std_data_table h2{
-    margin-top:-45px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     color:#383c4d;
-    margin-left:160px;
 }
 .std_data_table th, .std_data_table td{
     border: 2px solid gray;
@@ -565,7 +561,6 @@ input[type=time] {
     background-color: #bbdaeb;
 }
 .unibody{
-    margin-left:80px;
     background-image: url("images/bg3.png");
     background-repeat: no-repeat;
     background-size: cover;
@@ -589,4 +584,27 @@ input[type=time] {
 
 .acceptBtn svg, .completeBtn svg {
     padding: 8px 5px;
+}
+
+#uni-nav {
+    margin: 0 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#welcome-header {
+    text-transform: capitalize;
+    font-weight: bold;
+    font-family: 'Segoe Ui', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.main-university {
+    margin: 0 100px;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+#status-head th {
+    width: 33%;
 }
