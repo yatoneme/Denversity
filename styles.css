@@ -608,3 +608,23 @@ input[type=time] {
 #status-head th {
     width: 33%;
 }
+.acceptedmail, .expiredmail, .missedmail{
+    text-align: center;
+    font-family:sans-serif;
+    background-size: cover;
+    margin: 4em 30em;
+    border-radius: 8px;
+    padding: 10px;
+}
+.acceptedmail p, .expiredmail p, .missedmail p{
+    font-size: large;
+}
+.acceptedmail{
+    background-color: #eaf7ef;
+}
+.expiredmail{
+    background-color: #f6f7ea;
+}
+.missedmail{
+    background-color: #f7eaea;
+}
