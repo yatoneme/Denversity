@@ -1,3 +1,7 @@
+// TODO: Do user if accepted did not show up:
+/**
+ * Patients did not show up // button when clicked send email to the patient for rescheduling and remove it completely
+ */
 window.onload = () => {
     firebase.auth().onAuthStateChanged( user => {
         if(!user)
@@ -91,6 +95,7 @@ function renderTables(types) {
     
             cell.className = "status-cell"
             cell.id = `${class_type}-${i+1}`
+            button_container.className = "case_button_container"
             text_container.appendChild(category)
             text_container.appendChild(patientDetails)
             text_container.appendChild(schedule)
@@ -102,12 +107,75 @@ function renderTables(types) {
             // buttons for accepting cases and completing cases
             if(class_type !== "completed"){
                 const acceptBtn = document.createElement('button')
-                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(patient.id) : completeCase(patient.id)
+                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(acceptBtn, patient) : completeCase(acceptBtn, patient.id)
                 acceptBtn.className = class_type === "pending" ? "acceptBtn" : "completeBtn"
                 acceptBtn.innerHTML = '<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>'
+
                 button_container.appendChild(acceptBtn)
+
+                if(class_type === "pending")
+                {
+                    const late = new Date(`${patient.appointment_date}T${patient.time}`) < new Date()
+                    
+                    if(late){
+                        const removeBtn = document.createElement('button')
+
+                        // TODO: Make it work!
+                        removeBtn.onclick = () => removeCase(removeBtn, patient)
+                        removeBtn.className = "removeCaseBtn"
+                        removeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
+                        button_container.appendChild(removeBtn)
+                        acceptBtn.remove()
+                        cell.className += " case-late"
+                    }
+                }
             }
         }
+    })
+}
+
+function removeCase(removeBtn, patient) {
+    removeBtn.disabled=true;
+    removeBtn.style.background = 'grey';
+    firebase.auth().onAuthStateChanged( user => {
+        if(!user)
+        {
+            window.location.href = "signin.html"
+            return false
+        }
+
+        firebase.auth().currentUser.getIdToken(true).then(token => {
+            fetch(`http://localhost:3000/doctors/remove-case`, {
+                method: "DELETE",
+                body: JSON.stringify({
+                    role: "doctor",
+                    userId: token,
+                    caseId: patient.id,
+                    patient_email: patient.email,
+                    patient_name: patient.fullname,
+                    case_name: patient.problem_category
+                }),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json()).then(data => {
+                if(!data)
+                {
+                    setNotification(false, "Cannot remove that appointment!")
+                    return
+                }
+                setNotification(true, "Appointment is removed, an email is sent to the patient!")
+                
+                const { general, ...appointments } = data
+                renderTables(appointments)
+            }).catch(e => {
+                removeBtn.disabled=false;
+                removeBtn.style.background = '';
+                setNotification(false, "Sorry, an error has occured!")
+            })
+
+        })
     })
 }
 
@@ -131,7 +199,9 @@ function updateDoctorDisplay(doctor) {
     container.appendChild(university)
 }
 
-function acceptCase(caseId) {
+function acceptCase(button, patient) {
+    button.disabled=true;
+    button.style.background = 'grey';
     firebase.auth().onAuthStateChanged( user => {
         if(!user)
         {
@@ -143,9 +213,13 @@ function acceptCase(caseId) {
             fetch(`http://localhost:3000/doctors/accept`, {
                 method: "PUT",
                 body: JSON.stringify({
+                    role: "doctor",
                     userId: token,
-                    caseId,
-                    role: "doctor"
+                    caseId: patient.id,
+                    patient_name: patient.fullname,
+                    patient_email: patient.email,
+                    accepted_time: patient.time,
+                    accepted_date: patient.appointment_date
                 }),
                 mode: "cors",
                 headers: {
@@ -154,10 +228,11 @@ function acceptCase(caseId) {
             }).then(res => res.json()).then(data => {
                 if(!data)
                 {
-                    // TODO: notification false
+                    setNotification(false, "Cannot accept that appointment!")
                     return
                 }
- 
+                setNotification(true, "Appointment is accepted, an email is sent to the patient!")
+                
                 const { general, ...appointments } = data
                 renderTables(appointments)
 
@@ -168,7 +243,9 @@ function acceptCase(caseId) {
 }
 
 
-function completeCase(caseId) {
+function completeCase(button, caseId) {
+    button.disabled=true;
+    button.style.background = 'grey';
     firebase.auth().onAuthStateChanged( user => {
         if(!user)
         {
@@ -191,10 +268,11 @@ function completeCase(caseId) {
             }).then(res => res.json()).then(data => {
                 if(!data)
                 {
-                    // notification false
+                    setNotification(false, "Cannot complete that appointment!")
                     return
                 }
- 
+                setNotification(true, "Appointment is completed, well done!")
+
                 const { general, ...appointments } = data
                 renderTables(appointments)
 

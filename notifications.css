@@ -1,79 +1,79 @@
 .notification {
-    font-family: "Arial", sans-serif;
-    grid-template-columns: 40px auto;
-    align-items: center;
-    position: fixed;
-    z-index: 9;
-    right: 1rem;
-    top: 1rem;
-    margin-top: 50px;
-    padding: 0 20px;
-    transform-origin: right;
-    animation: notify 3s ease-in forwards;
-    display: none;
-  }
+  font-family: "Arial", sans-serif;
+  grid-template-columns: 40px auto;
+  align-items: center;
+  position: fixed;
+  z-index: 9;
+  right: 1rem;
+  top: 1rem;
+  margin-top: 50px;
+  padding: 0 20px;
+  transform-origin: right;
+  animation: notify 4s ease-in forwards;
+  display: none;
+}
 
-  
-  @keyframes notify {
-    0% {transform: scaleX(0);}
-    10% {transform: scaleX(0.2);}
-    13% {transform: scaleX(1.1);}
-    16% {transform: scaleX(1);}
-    55% {transform: scaleX(1); border-radius: 0%;}
-    65% {transform: scaleX(0);}
-    75% {transform: scaleX(0);}
-    100% {transform: scaleX(0);}
-  }
-  
-  .identifier {
-    display: flex;
-    align-items: center;
-    justify-items: center;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-  }
-  .identifier svg[data-success] {
-    padding-left: 2px;
-    fill: #3f5c57;
-  }
 
-  .identifier svg[data-fail] {
-    padding-left: 4px;
-    fill: #5c3f3f;
-  }
-  .notification[data-status="success"]  {
-    display: grid;
-    background-color: #C1F7EE;
-  }
-  .notification[data-status="failed"]  {
-    display: grid;
-    background-color: #f7c1c1;
-  }
-  .notification[data-status="success"] .identifier  {
-    background-color: #94DACD;
-  }
+@keyframes notify {
+  0% {transform: scaleX(0);}
+  10% {transform: scaleX(0.2);}
+  13% {transform: scaleX(1.1);}
+  16% {transform: scaleX(1);}
+  55% {transform: scaleX(1); border-radius: 0%;}
+  65% {transform: scaleX(1);}
+  75% {transform: scaleX(0);}
+  100% {transform: scaleX(0);}
+}
 
-  .notification[data-status="success"] .identifier svg[data-fail]  {
-    display: none;
-  }
+.identifier {
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+}
+.identifier svg[data-success] {
+  padding-left: 2px;
+  fill: #3f5c57;
+}
 
-  .notification[data-status="failed"] .identifier svg[data-success]  {
-    display: none;
-  }
-  
-  .notification[data-status="failed"] .identifier  {
-    background-color: #da9494;
-  }
-  
-  .text {
-    width: 100%;
-    animation: exit 3s ease-in-out forwards;
-  }
-  
-  @keyframes exit {
-    0% {opacity: 1;}
-    55% {opacity: 1;}
-    65% {opacity: 0;}  
-    100% {opacity: 0;}
-  }
+.identifier svg[data-fail] {
+  padding-left: 4px;
+  fill: #5c3f3f;
+}
+.notification[data-status="success"]  {
+  display: grid;
+  background-color: #C1F7EE;
+}
+.notification[data-status="failed"]  {
+  display: grid;
+  background-color: #f7c1c1;
+}
+.notification[data-status="success"] .identifier  {
+  background-color: #94DACD;
+}
+
+.notification[data-status="success"] .identifier svg[data-fail]  {
+  display: none;
+}
+
+.notification[data-status="failed"] .identifier svg[data-success]  {
+  display: none;
+}
+
+.notification[data-status="failed"] .identifier  {
+  background-color: #da9494;
+}
+
+#text {
+  width: 100%;
+  animation: exit 4s ease-in-out forwards;
+}
+
+@keyframes exit {
+  0% {opacity: 1;}
+  55% {opacity: 1;}
+  65% {opacity: 1;}  
+  100% {opacity: 0;}
+}

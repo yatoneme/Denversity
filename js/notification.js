@@ -5,12 +5,18 @@ const defaultText = {
 
 function setNotification(data, text) {
     const notification = document.getElementById("notification");
-    notification.querySelector("#text").innerHTML = 
+    const notiText = notification.querySelector("#text")
+    notiText.innerHTML = 
     text ? text : data ? defaultText.success : defaultText.fail
 
     notification.dataset.status = data ? "success" : "failed"
-    if(!data)
-        setTimeout(() => {
-            notification.dataset.status = ""
-        }, 3000)
+
+    // Reset animation
+    notification.style.animation = 'none';
+    notiText.style.animation = 'none';
+
+    setTimeout(function() {
+        notiText.style.animation = '';
+        notification.style.animation = '';
+    }, 10);
 }

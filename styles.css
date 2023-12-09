@@ -495,6 +495,7 @@ input[type=time] {
     border-color: #e0e5e7;
 }
 .status-cell{
+    padding: 0 0 20px 10px;
     text-align: left;
     background-color: rgb(225, 233, 239);
     border-radius: 10px;
@@ -566,7 +567,7 @@ input[type=time] {
     background-size: cover;
 }
 
-.acceptBtn, .completeBtn {
+.acceptBtn, .completeBtn, .removeCaseBtn {
     display: flex;
     justify-items: center;
     border: none;
@@ -582,7 +583,7 @@ input[type=time] {
     background: rgb(171, 132, 78);
 }
 
-.acceptBtn svg, .completeBtn svg {
+.acceptBtn svg, .completeBtn svg, .removeCaseBtn svg {
     padding: 8px 5px;
 }
 
@@ -608,23 +609,21 @@ input[type=time] {
 #status-head th {
     width: 33%;
 }
-.acceptedmail, .expiredmail, .missedmail{
-    text-align: center;
-    font-family:sans-serif;
-    background-size: cover;
-    margin: 4em 30em;
-    border-radius: 8px;
-    padding: 10px;
+
+.removeCaseBtn {
+    fill: white;
+    background-color: #d35353;
 }
-.acceptedmail p, .expiredmail p, .missedmail p{
-    font-size: large;
+
+.case_button_container {
+    display: flex;
 }
-.acceptedmail{
-    background-color: #eaf7ef;
+
+.case_button_container button {
+    margin: 0 10px 0 0;
 }
-.expiredmail{
-    background-color: #f6f7ea;
-}
-.missedmail{
-    background-color: #f7eaea;
+
+.case-late {
+    background: #ede1e1;
+    border-color: #d1c4c4;
 }

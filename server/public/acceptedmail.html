@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Accepted Appointment</title>
+        <style>
+            .acceptedmail, .expiredmail, .missedmail{
+                text-align: center;
+                font-family:sans-serif;
+                background-size: cover;
+                margin: 4em 30em;
+                border-radius: 8px;
+                padding: 10px;
+            }
+            .acceptedmail p, .expiredmail p, .missedmail p{
+                font-size: large;
+            }
+            .acceptedmail{
+                background-color: #eaf7ef;
+            }
+            .expiredmail{
+                background-color: #f6f7ea;
+            }
+            .missedmail{
+                background-color: #f7eaea;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="acceptedmail">
+            <img src="cid:logo" alt="logo" class="unilogomail">
+            <h1>Appointment accepted</h1>
+            <p>Dear "(patient_name)",</p>
+            <p>Your appointment has been accepted successfully!</p>
+            <p>Details are as follows:</p>
+            <i class="fa-solid fa-user-doctor">Appointed to Dr. "(doctor_name)"</i>
+            <br><br>
+            <i class="fa-solid fa-hourglass-start">"(accepted_time)"</i>
+            <br><br>
+            <i class="fa-solid fa-calendar-days">"(accepted_date)"</i>
+            <br><br>
+            <i class="fa-solid fa-location-dot">"(university_name)"</i>
+            <p>Please make sure to be there on time.</p>
+            <p>Thank you for using Denversity!</p>
+            <p>This mail is automatically sent by our system, please do not reply.</p>
+            <p>-Denversity team</p>
+            <p><a href="http://localhost:5500/front.html"> Visit our website here</a></p>
+        </div>
+    </body>
+</html>
