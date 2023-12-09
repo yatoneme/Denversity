@@ -8,7 +8,7 @@ Appointment.post('/', (req, res) => {
     const appointments = db.collection('appointments')
 
     appointments.add(appointment).then(data => {
-        res.status(200).send({ id: data.id })
+        res.sendStatus(200)
     }).catch(e => res.sendStatus(500))
 })
 

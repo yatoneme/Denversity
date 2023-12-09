@@ -373,6 +373,7 @@ label{
     margin-left: auto;
     margin-right: auto;
     width: 90%;
+    height: 100%;
 }
 .bookbody{
     min-height: 100vh;
@@ -502,7 +503,7 @@ input[type=time] {
     border-color: #e0e5e7;
 }
 .status-cell{
-    padding: 0 0 20px 10px;
+    padding: 5px 20px;
     text-align: left;
     background-color: rgb(225, 233, 239);
     border-radius: 10px;
@@ -574,7 +575,7 @@ input[type=time] {
     background-size: cover;
 }
 
-.acceptBtn, .completeBtn, .removeCaseBtn {
+.acceptBtn, .completeBtn, .removeCaseBtn, .absentCaseBtn {
     display: flex;
     justify-items: center;
     border: none;
@@ -590,7 +591,7 @@ input[type=time] {
     background: rgb(171, 132, 78);
 }
 
-.acceptBtn svg, .completeBtn svg, .removeCaseBtn svg {
+.acceptBtn svg, .completeBtn svg, .removeCaseBtn svg, .absentCaseBtn svg {
     padding: 8px 5px;
 }
 
@@ -622,13 +623,22 @@ input[type=time] {
     background-color: #d35353;
 }
 
-.case_button_container {
-    display: flex;
+.absentCaseBtn {
+    fill: white;
+    background-color: #d35353;
 }
 
-.case_button_container button {
-    margin: 0 10px 0 0;
+.options-buttons-text {
+    text-decoration: overline 1px grey;
+    margin-bottom: 10px;
 }
+
+.case_button_container {
+    display: flex;
+    align-self: flex-start;
+    margin-top: 1.2em;
+}
+
 
 .case-late {
     background: #ede1e1;

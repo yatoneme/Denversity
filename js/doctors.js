@@ -83,16 +83,16 @@ function renderTables(types) {
             patientDetails = document.createElement('p'),
             schedule = document.createElement('p'),
             description = document.createElement('p')
-    
+
             const timeJs = new Date(`1970-01-01T${patient.time}`).toLocaleTimeString()
             const scheduleTimeSearch = new RegExp(/([0-9]{1,2}:[0-9]{2})(:[0-9]{2}) (AM|PM)/).exec(timeJs)
             const scheduleTime = scheduleTimeSearch[1] + scheduleTimeSearch[3].toLowerCase()
-    
+            
             category.innerHTML = patient.problem_category
             patientDetails.innerHTML = `${patient.fullname}, ${age}, ${patient.gender}`
             schedule.innerHTML = `Schedule: ${patient.appointment_date}, at: ${scheduleTime}`
             description.innerHTML = `Description: ${patient.problem_description}`
-    
+            
             cell.className = "status-cell"
             cell.id = `${class_type}-${i+1}`
             button_container.className = "case_button_container"
@@ -107,23 +107,41 @@ function renderTables(types) {
             // buttons for accepting cases and completing cases
             if(class_type !== "completed"){
                 const acceptBtn = document.createElement('button')
+
+                acceptBtn.title = "Accept the appointment"
                 acceptBtn.onclick = () => class_type === "pending" ? acceptCase(acceptBtn, patient) : completeCase(acceptBtn, patient.id)
                 acceptBtn.className = class_type === "pending" ? "acceptBtn" : "completeBtn"
                 acceptBtn.innerHTML = '<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>'
 
                 button_container.appendChild(acceptBtn)
-
+                console.log(class_type);
                 if(class_type === "pending")
                 {
                     const late = new Date(`${patient.appointment_date}T${patient.time}`) < new Date()
                     
                     if(late){
                         const removeBtn = document.createElement('button')
+                        removeBtn.title = "Mark the appointment as expired."
 
-                        // TODO: Make it work!
                         removeBtn.onclick = () => removeCase(removeBtn, patient)
                         removeBtn.className = "removeCaseBtn"
-                        removeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
+                        removeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>'
+                        button_container.appendChild(removeBtn)
+                        acceptBtn.remove()
+                        cell.className += " case-late"
+                    }
+                } else if(class_type === "accepted")
+                {
+                    const late = new Date(`${patient.appointment_date}T${patient.time}`) < new Date()
+                    
+                    if(late){
+                        const removeBtn = document.createElement('button')
+                        removeBtn.title = "Mark the appointment as late."
+
+                        // TODO: Make it work!
+                        removeBtn.onclick = () => removeLateCase(removeBtn, patient)
+                        removeBtn.className = "absentCaseBtn"
+                        removeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>'
                         button_container.appendChild(removeBtn)
                         acceptBtn.remove()
                         cell.className += " case-late"
@@ -145,7 +163,52 @@ function removeCase(removeBtn, patient) {
         }
 
         firebase.auth().currentUser.getIdToken(true).then(token => {
-            fetch(`http://localhost:3000/doctors/remove-case`, {
+            fetch(`http://localhost:3000/doctors/remove-case/expired`, {
+                method: "DELETE",
+                body: JSON.stringify({
+                    role: "doctor",
+                    userId: token,
+                    caseId: patient.id,
+                    patient_email: patient.email,
+                    patient_name: patient.fullname,
+                    case_name: patient.problem_category
+                }),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => res.json()).then(data => {
+                if(!data)
+                {
+                    setNotification(false, "Cannot remove that appointment!")
+                    return
+                }
+                setNotification(true, "Appointment is removed, an email is sent to the patient!")
+                
+                const { general, ...appointments } = data
+                renderTables(appointments)
+            }).catch(e => {
+                removeBtn.disabled=false;
+                removeBtn.style.background = '';
+                setNotification(false, "Sorry, an error has occured!")
+            })
+
+        })
+    })
+}
+
+function removeLateCase(removeBtn, patient) {
+    removeBtn.disabled=true;
+    removeBtn.style.background = 'grey';
+    firebase.auth().onAuthStateChanged( user => {
+        if(!user)
+        {
+            window.location.href = "signin.html"
+            return false
+        }
+
+        firebase.auth().currentUser.getIdToken(true).then(token => {
+            fetch(`http://localhost:3000/doctors/remove-case/late`, {
                 method: "DELETE",
                 body: JSON.stringify({
                     role: "doctor",
@@ -271,6 +334,7 @@ function completeCase(button, caseId) {
                     setNotification(false, "Cannot complete that appointment!")
                     return
                 }
+
                 setNotification(true, "Appointment is completed, well done!")
 
                 const { general, ...appointments } = data

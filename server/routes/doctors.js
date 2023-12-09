@@ -104,10 +104,18 @@ const sendAcceptEmail = (req, res, next) => {
     next()
 }
 
-const sendExpiredEmail = (req, res, next) => {
+const sendRemovedAppointmentEmail = (req, res, next) => {
     const { patient_name, patient_email, case_name } = req.body
+    const remove_reason = req.path.split('/')[2]
 
-    sendMail('Your appointment has been expired!', 'expiredmail', {
+    // Router only supports 2 routes: expired & late
+    if(remove_reason !== "expired" && remove_reason !== "late")
+        return res.sendStatus(404)
+
+    const email_title = remove_reason === "expired" ? "Your appointment has been expired!" : "You've missed your appointment!"
+    const email_filename = remove_reason === "expired" ? "expiredmail" : "missedmail"
+
+    sendMail(email_title, email_filename, {
         patient_email,
         patient_name,
         case_name,
@@ -121,7 +129,7 @@ const sendExpiredEmail = (req, res, next) => {
 
 
 Doctors.post('/', getAppointments)
-Doctors.delete('/remove-case', sendExpiredEmail, deleteCase, getAppointments)
+Doctors.delete('/remove-case/*', sendRemovedAppointmentEmail, deleteCase, getAppointments)
 Doctors.put('/accept', updateAppointmentStatus, sendAcceptEmail, getAppointments)
 Doctors.put('/complete', updateAppointmentStatus, getAppointments)
 
