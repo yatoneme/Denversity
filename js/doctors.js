@@ -102,7 +102,7 @@ function renderTables(types) {
             // buttons for accepting cases and completing cases
             if(class_type !== "completed"){
                 const acceptBtn = document.createElement('button')
-                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(acceptBtn, patient.id) : completeCase(acceptBtn, patient.id)
+                acceptBtn.onclick = () => class_type === "pending" ? acceptCase(acceptBtn, patient) : completeCase(acceptBtn, patient)
                 acceptBtn.className = class_type === "pending" ? "acceptBtn" : "completeBtn"
                 acceptBtn.innerHTML = '<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>'
                 button_container.appendChild(acceptBtn)
@@ -131,7 +131,7 @@ function updateDoctorDisplay(doctor) {
     container.appendChild(university)
 }
 
-function acceptCase(button, caseId) {
+function acceptCase(button, patient) {
     button.disabled=true;
     button.style.fontSize = "25px";
     button.style.background = 'grey';
@@ -146,9 +146,14 @@ function acceptCase(button, caseId) {
             fetch(`http://localhost:3000/doctors/accept`, {
                 method: "PUT",
                 body: JSON.stringify({
+                    role: "doctor",
                     userId: token,
-                    caseId,
-                    role: "doctor"
+                    caseId: patient.id,
+                    patient_name: patient.fullname,
+                    patient_email: patient.email,
+                    accepted_time: patient.time,
+                    accepted_date: patient.appointment_date,
+                    case_name: patient.problem_category
                 }),
                 mode: "cors",
                 headers: {
@@ -172,7 +177,7 @@ function acceptCase(button, caseId) {
 }
 
 
-function completeCase(button, caseId) {
+function completeCase(button, patient) {
     button.disabled=true;
     button.style.fontSize = "25px";
     button.style.background = 'grey';
@@ -188,7 +193,10 @@ function completeCase(button, caseId) {
                 method: "PUT",
                 body: JSON.stringify({
                     userId: token,
-                    caseId,
+                    patient_name: patient.fullname,
+                    patient_email: patient.email,
+                    accepted_time: patient.time,
+                    accepted_date: patient.appointment_date,
                     role: "doctor"
                 }),
                 mode: "cors",

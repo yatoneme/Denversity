@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Missed Appointment</title>
+        <style>
+            .acceptedmail, .expiredmail, .missedmail{
+                text-align: center;
+                font-family:sans-serif;
+                background-size: cover;
+                margin: 4em 30em;
+                border-radius: 8px;
+                padding: 10px;
+            }
+            .acceptedmail p, .expiredmail p, .missedmail p{
+                font-size: large;
+            }
+            .acceptedmail{
+                background-color: #eaf7ef;
+            }
+            .expiredmail{
+                background-color: #f6f7ea;
+            }
+            .missedmail{
+                background-color: #f7eaea;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="missedmail">
+            <img src="cid:logo" alt="logo" class="unilogomail">
+            <h1>Appointment missed</h1>
+            <p>Dear "(patient_name)",</p>
+            <p>It seems that you missed your appointment for "(case_name)" and therefore it has been cancelled.</p>
+            <p>Do not worry though, you can try to reschedule again.</p>
+            <p><a href="http://localhost:5500/categories.html">Click here</a> to reschedule your appointment.</p>
+            <p>Please make sure to be there on time if you do, as our doctors are very busy.</p>
+            <p>Thank you for using Denversity!</p>
+            <p>This mail is automatically sent by our system, please do not reply.</p>
+            <p>-Denversity team</p>
+            <p><a href="http://localhost:5500/front.html"> Visit our website here</a></p>
+        </div>
+    </body>
+</html>
