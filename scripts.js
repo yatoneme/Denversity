@@ -1,3 +1,9 @@
+var logoImage = document.getElementById('logoImage');
+logoImage.addEventListener('click', function() { 
+    window.location.href = 'front.html';
+});
+
+
 function unilogin() {
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
