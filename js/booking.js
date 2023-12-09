@@ -17,6 +17,17 @@ window.onload = () => {
             "Content-Type": "application/json"
         }
     }).then(res => res.json()).then(data => renderUniversityList(data))
+
+    const year = new Date().getFullYear()
+    const month = new Date().getMonth() + 1
+    const day = new Date().getDate()
+    const dayNextMonth = new Date(year, month, day).getDate()
+    const nextMonth = new Date(year, month, day).getMonth() + 1
+    const nextYear = new Date(year, month, day).getFullYear()
+
+    document.getElementById("appointment-date").min = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`
+    document.getElementById("appointment-date").max = `${nextYear}-${nextMonth < 10 ? `0${nextMonth}` : nextMonth}-${dayNextMonth < 10 ? `0${dayNextMonth}` : dayNextMonth}`
+    document.getElementById("bd").max = `${year - 1}-01-01`
 }
 
 function renderUniversityList({ data }) {
@@ -31,12 +42,10 @@ function renderUniversityList({ data }) {
     })
 }
 
-var sub=document.getElementById("sub");
 
-sub.addEventListener("click",sendform);
 
-function sendform(e){ //should send form data to doctors.html and display it in a paragraph in the pending column
-    e.preventDefault();
+function sendform(e){
+    const sub = document.getElementById("sub");
     sub.disabled = true;
 
     const appointment = {
@@ -45,7 +54,7 @@ function sendform(e){ //should send form data to doctors.html and display it in 
         "phone": document.getElementById("number").value,
         "birthday": document.getElementById("bd").value,
         "appointment_date": document.getElementById("appointment-date").value,
-        "gender": document.getElementById("check").value,
+        "gender": document.querySelector("input[name='gender']:checked").value,
         "time": document.getElementById("timee").value,
         "university_name": document.getElementById("uni-options").value,
         "problem_description": document.getElementById("notes").value,
@@ -60,14 +69,15 @@ function sendform(e){ //should send form data to doctors.html and display it in 
         headers: {
             "Content-Type": "application/json"
         }
-    }).then(res => res.json()).then(data => {
-        setNotification(data)
-
-        if(!data)
+    }).then(res =>  {
+        sub.disabled = false;
+        if(!res.ok){
             sub.disabled = false;
+            return false;
+        }
         else
             window.location.href = 'front.html?successfulAppointment=1';
-    })
+    }).catch(e => false)
 
-    return false;
+    return false
 }

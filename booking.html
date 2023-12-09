@@ -20,7 +20,7 @@
             <p id="header-case-type"></p>
             Book Your Appointment
         </header>
-        <form action="" id="registration-form" class="form">
+        <form onsubmit="event.preventDefault(); return sendform()" id="registration-form" class="form">
             <div class="input-box">
                 <label>Full Name</label>
                 <input type="text" id="name" placeholder="Enter full name" required>
@@ -32,23 +32,23 @@
             <div class="column">
                 <div class="input-box">
                     <label>Phone Number</label>
-                    <input type="number" id="number" placeholder="Enter phone number" required>
+                    <input type="tel" pattern="01[0125][0-9]{8}" id="number" placeholder="Enter phone number" required>
                 </div>
                 <div class="input-box">
                     <label>Birthday Date</label>
-                    <input type="date"  id="bd" placeholder="Enter birthdate" required>
+                    <input type="date" id="bd" placeholder="Enter birthdate" required>
                 </div>
             </div>
             <div class="gender-check">
                 <h3>Gender</h3>
                 <div class="genderoption">
                     <div class="gender">
-                        <input type="radio" id= "check" name="gender" value="male">
-                        <label for="check">Male</label>
+                        <input type="radio" id= "male" name="gender" value="male" required>
+                        <label for="male">Male</label>
                     </div>
                     <div class="gender">
-                        <input type="radio" id= "check" name="gender" value="female">
-                        <label for="check">Female</label>
+                        <input type="radio" id= "female" name="gender" value="female" required>
+                        <label for="female">Female</label>
                     </div>
                 </div>
             </div>
@@ -65,7 +65,7 @@
                 <label>University</label>
                 <div class="column">
                     <div class="selectoption">
-                        <select id="uni-options">
+                        <select id="uni-options" required>
                             <option value="" disabled selected>Choose university</option>
                         </select>
                 </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="input-box">
                 <label>Notes</label>
-                <input type="text" id="notes" placeholder="Describe your problem.." >
+                <input type="text" id="notes" placeholder="Describe your problem.." required>
             </div>
             <button class="sbmtbtn" id="sub" type="submit">Submit</button>
         </form>
