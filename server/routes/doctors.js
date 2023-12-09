@@ -73,6 +73,18 @@ const updateAppointmentStatus = (req, res, next) => {
     })
 }
 
+const deleteCase = (req, res, next) => {
+    const { caseId } = req.body
+
+    const db = getFirestore()
+
+    db.collection('appointments').doc(caseId).delete().then(() => next())
+    .catch(e => {
+        console.error(e)
+        res.sendStatus(400)
+    })
+}
+
 const sendAcceptEmail = (req, res, next) => {
     const { patient_name, patient_email, accepted_time, accepted_date } = req.body
     const { name: doctor_name, university: university_name } = req.dbuser
@@ -92,8 +104,24 @@ const sendAcceptEmail = (req, res, next) => {
     next()
 }
 
+const sendExpiredEmail = (req, res, next) => {
+    const { patient_name, patient_email, case_name } = req.body
+
+    sendMail('Your appointment has been expired!', 'expiredmail', {
+        patient_email,
+        patient_name,
+        case_name,
+    }, (error) => {
+        if(error)
+            console.error(error)
+    })
+
+    next()
+}
+
 
 Doctors.post('/', getAppointments)
+Doctors.delete('/remove-case', sendExpiredEmail, deleteCase, getAppointments)
 Doctors.put('/accept', updateAppointmentStatus, sendAcceptEmail, getAppointments)
 Doctors.put('/complete', updateAppointmentStatus, getAppointments)
 
