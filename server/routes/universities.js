@@ -44,7 +44,6 @@ Universities.post('/', (req, res) => {
 
         universities.add(university).then(ref => res.sendStatus(200))
     }).catch(e => {
-        console.log(e);
         if(e.code === "auth/email-already-exists")
             return res.sendStatus(409)
         res.sendStatus(500)

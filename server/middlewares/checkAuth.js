@@ -7,7 +7,7 @@ const checkAuth = (req, res, next) => {
     getAuth().verifyIdToken(userId).then(user => {
         if(user.uid)
         {
-            console.log(`user: ${user.email} is authenticated!`);
+            // User is attached to request for future use!
             req.user = user
 
             return next()
