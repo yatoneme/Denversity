@@ -1,7 +1,3 @@
-// TODO: Do user if accepted did not show up:
-/**
- * Patients did not show up // button when clicked send email to the patient for rescheduling and remove it completely
- */
 window.onload = () => {
     firebase.auth().onAuthStateChanged( user => {
         if(!user)
@@ -77,7 +73,8 @@ function renderTables(types) {
                 age--;
             }
                 
-            const text_container = document.createElement('div'),
+            const cell_container = document.createElement('div'),
+            text_container = document.createElement('div'),   
             button_container = document.createElement('div'),
             category = document.createElement('h4'),
             patientDetails = document.createElement('p'),
@@ -93,28 +90,31 @@ function renderTables(types) {
             schedule.innerHTML = `Schedule: ${patient.appointment_date}, at: ${scheduleTime}`
             description.innerHTML = `Description: ${patient.problem_description}`
             
+
             cell.className = "status-cell"
             cell.id = `${class_type}-${i+1}`
+            cell_container.className = "cell_container"
             button_container.className = "case_button_container"
             text_container.appendChild(category)
             text_container.appendChild(patientDetails)
             text_container.appendChild(schedule)
             text_container.appendChild(description)
-            cell.appendChild(text_container)
-            cell.appendChild(button_container)
+            cell_container.appendChild(text_container)
+            cell_container.appendChild(button_container)
+            cell.appendChild(cell_container)
             row.appendChild(cell)
 
             // buttons for accepting cases and completing cases
             if(class_type !== "completed"){
                 const acceptBtn = document.createElement('button')
 
-                acceptBtn.title = "Accept the appointment"
+                acceptBtn.title = class_type === "pending" ? "Accept the appointment" : "Mark as finished"
                 acceptBtn.onclick = () => class_type === "pending" ? acceptCase(acceptBtn, patient) : completeCase(acceptBtn, patient.id)
                 acceptBtn.className = class_type === "pending" ? "acceptBtn" : "completeBtn"
                 acceptBtn.innerHTML = '<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>'
 
                 button_container.appendChild(acceptBtn)
-                console.log(class_type);
+
                 if(class_type === "pending")
                 {
                     const late = new Date(`${patient.appointment_date}T${patient.time}`) < new Date()
@@ -138,7 +138,6 @@ function renderTables(types) {
                         const removeBtn = document.createElement('button')
                         removeBtn.title = "Mark the appointment as late."
 
-                        // TODO: Make it work!
                         removeBtn.onclick = () => removeLateCase(removeBtn, patient)
                         removeBtn.className = "absentCaseBtn"
                         removeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>'
