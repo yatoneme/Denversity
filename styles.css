@@ -418,6 +418,12 @@ label{
   border-radius: 6px;
   padding: 0px 15px;
 }
+#input-checkbox * {
+    height: 15px;
+    width: 15px;
+    font-size: medium;
+}
+
 .form .column{
   display: flex;
   column-gap: 9%;

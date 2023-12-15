@@ -24,7 +24,7 @@ Universities.post('/', (req, res) => {
     if(hashed_secret !== process.env.HASHED_SECRET)
         return res.sendStatus(400)
 
-
+    
     admin.auth().createUser({
         email,
         password,
