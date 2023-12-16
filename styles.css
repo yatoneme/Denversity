@@ -710,7 +710,7 @@ input[type=time] {
     box-sizing: border-box;
 }
 
-section{
+#contact-section{
    
     display: flex;
     justify-content: center;
@@ -719,7 +719,7 @@ section{
     background: rgb(224, 232, 247)
     ;
 }
-section::before{
+#contact-section::before{
     content: " ";
     position: absolute;
     top: 0;
