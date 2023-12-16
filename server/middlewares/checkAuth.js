@@ -31,8 +31,8 @@ const checkRole = (req, res, next) => {
     collection.where("email", "==", email).limit(1).get().then(user => {
         if(user.empty)
             return res.sendStatus(400);
-
-        next()
+    
+        return next()
     }).catch(e => {
         console.error(e.code);
         res.sendStatus(400);

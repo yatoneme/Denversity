@@ -293,7 +293,7 @@ function acceptCase(button, patient) {
                     setNotification(false, "Cannot accept that appointment!")
                     return
                 }
-                setNotification(true, "Appointment is accepted, an email is sent to the patient!")
+                setNotification(true, "Sent, when approved you'll find your case in the accepted column!")
                 
                 const { general, ...appointments } = data
                 renderTables(appointments)

@@ -1,7 +1,6 @@
 html{
-
-scroll-behavior: smooth;
-
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    scroll-behavior: smooth;
 }
 
 
@@ -539,17 +538,30 @@ input[type=time] {
     color:#383c4d;
     margin-top:20px;
 }
-.uniform label{
+.uniform-text-inputs label {
     color:rgb(2, 0, 8);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
-.uniform{
+#categories-select * {
+    font-size: unset;
+    color:rgb(2, 0, 8);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.uniform {
     border-radius: 15px;
     margin-left:15px;
     float:left;
     background-color:rgb(241 234 234 /70%);
+    width: 90%;
 }
-.uniform input{
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    align-items: center;
+}
+.uniform input:not([type="checkbox"]){
     border-radius: 3px;
     width: 90%;
     padding:7px;
@@ -620,9 +632,11 @@ input[type=time] {
 }
 
 .main-university {
-    margin: 0 100px;
+    margin: 0 20px;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 40%;
+    gap: 2em;
+    grid-template-rows: auto auto;
 }
 
 #status-head th {
@@ -655,4 +669,43 @@ input[type=time] {
 .case-late {
     background: #ede1e1;
     border-color: #d1c4c4;
+}
+
+#std_history {
+    border-collapse: collapse;
+    background: white;
+}
+
+#std_history th, #std_history tr {    
+    border: 2px solid gray;
+}
+
+#std_history th, #std_history td {
+    padding: 5px;
+}
+
+.student-request-details * {
+    margin: 0;
+    padding-left: 10px;
+}
+
+.student-request-details:last-child {
+    font-size: small;
+}
+
+.student-request-category {
+    font-weight: bold;
+}
+
+.accept-request-btn {
+    background: #2bdc86;
+}
+
+.accept-request-btn, .decline-request-btn {
+    border: none;
+    padding: 0.5em 1em;
+    color: white;
+}
+.decline-request-btn {
+    background: #dc2b2b;
 }

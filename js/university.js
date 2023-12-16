@@ -25,7 +25,7 @@ window.onload = () => {
                 }
                 return res.json()
             }).then(data => {
-                const { university, doctors, displayName } = data
+                const { university, doctors, displayName, pendingRequests, categories } = data
 
                 if(!university){
                     window.location.href = "universitylogin.html"
@@ -38,11 +38,113 @@ window.onload = () => {
                 window.loggedInUniversity = university
 
                 renderDoctorsTable(doctors)
+                renderPendingRequestsTable(pendingRequests)
+                renderCategories(categories)
             }).catch(e => {
                 console.error(e)
                 setNotification(false, 'Sorry, and error has occured!')
             })
         })
+    })
+}
+
+function renderPendingRequestsTable(requests) {    
+    const table = document.getElementById("std_history");
+    requests.forEach(request => {
+        const row = document.createElement('tr')
+        // Doctor email, time of request, date of appointment, case type
+        const cel1 = document.createElement('td')
+        const cel2 = document.createElement('td')
+        const cel3 = document.createElement('td')
+        const confirmBtn = document.createElement('button')
+        const rejectBtn = document.createElement('button')
+        const timedate = new Date(request.request_sent_at)
+        const requestedAt = `${timedate.toDateString()} at ${timedate.toLocaleTimeString()}`
+
+        confirmBtn.className = "accept-request-btn"
+        confirmBtn.onclick = e => confirmCase(request)
+        confirmBtn.title = "Accept the request"
+
+        rejectBtn.className = "decline-request-btn"
+        rejectBtn.onclick = e => declineCase(request)
+        confirmBtn.title = "Decline the request"
+
+        row.id = request.id
+        cel1.innerHTML = `<p class="student-request-category">${request.problem_category}</p>`
+        cel2.innerHTML = `<div class="student-request-details"><p>${request.doctor_email}</p><p>${requestedAt}</p></div>`
+        confirmBtn.innerHTML = `<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>`
+        rejectBtn.innerHTML = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>`
+
+        row.appendChild(cel1)
+        row.appendChild(cel2)
+        cel3.appendChild(confirmBtn)
+        cel3.appendChild(rejectBtn)
+        row.appendChild(cel3)
+        table.appendChild(row)
+    })
+}
+
+function confirmCase(patient) {
+    firebase.auth().onAuthStateChanged( user => {
+        if(!user)
+        {
+            window.location.href = "universitylogin.html"
+            return false
+        }
+
+        firebase.auth().currentUser.getIdToken(true).then(token => {
+            fetch(`http://localhost:3000/university/accept`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    role: 'university',
+                    userId: token,
+                    caseId: patient.id,
+                    patient_name: patient.fullname,
+                    patient_email: patient.email,
+                    accepted_time: patient.time,
+                    accepted_date: patient.appointment_date,
+                    student_email: patient.doctor_email
+                }),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                if(!res.ok)
+                {
+                    setNotification(false, "Cannot accept that appointment!")
+                    return
+                }
+                const row = document.getElementById(patient.id)
+
+                setNotification(true, "Approved, an email is sent to the patient!")
+                row.remove()
+            })
+
+        })
+    })
+}
+
+function declineCase(request) {
+    console.log(request);
+}
+
+function renderCategories(categories) {
+    const categories_container = document.getElementById("categories-select")
+
+    categories.forEach(category => {
+        const categoryBox = document.createElement("input")
+        const label = document.createElement("label")
+
+        label.htmlFor = category.split(' ').join('')
+        label.innerText = category
+        categoryBox.name = category
+        categoryBox.id = category.split(' ').join('')
+        categoryBox.type = "checkbox"
+        categoryBox.value = category
+
+        categories_container.appendChild(label)
+        categories_container.appendChild(categoryBox)
     })
 }
 
@@ -71,6 +173,10 @@ function renderDoctorsTable(doctors) {
 
 function savedata() {
     event.preventDefault();
+    const selectedSpecialties = [...document.querySelectorAll("input[type='checkbox']:checked")].map(specialtyInput => specialtyInput.value)
+
+    if(!selectedSpecialties.length)
+        return alert("You must check at least one category.");
 
     const tbody = document.getElementById("std_data-body")
     const currentIndex = tbody.childNodes.length;
@@ -79,13 +185,14 @@ function savedata() {
       name: document.getElementById("sname").value,
       email: document.getElementById("semail").value,
       university: window.loggedInUniversity.name,
-      password: document.getElementById("spassword").value
+      password: document.getElementById("spassword").value,
+      selectedSpecialties
     };
     
     storeNewDoctor(doctor).then(() => {
         addToTable(doctor, tbody, currentIndex)
         document.getElementById("regform").reset();
-        setNotification(true, `${doctor.email} is added`)        
+        setNotification(true, `${doctor.email} is added`)
     }, (reason_not_stored) => {
         if(reason_not_stored === 409)
             setNotification(false, 'Email is already used!')
@@ -201,6 +308,17 @@ function addToTable(doctor, tbody, atIndex) {
 
     cel1.innerHTML = doctor.name;
     cel2.innerHTML = doctor.email;
-    cel3.innerHTML = "*****";
+    
+    doctor.doctor_specialties.forEach((specialty, idx) => {
+        
+        cel3.innerHTML += specialty.specialty;
+        
+        if(idx !== doctor.doctor_specialties.length - 1){
+            cel3.innerHTML += ',';
+        }
+    })
+
+    cel3.style.fontSize = "10px"
+
     cel4.innerHTML = `<input type="button" name="Del" value="Delete" onclick="delStudent('${doctor.name}', '${doctor.email}', this.parentNode.parentNode);" class="btn btn-danger">`;
 }
