@@ -752,7 +752,6 @@ input[type=time] {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    justify-content: space-between;
 }
 .Form .contactform{
     position: absolute;
@@ -828,13 +827,13 @@ font-weight: 100;
 font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 transition: 0.3s;
 }
-.Form .contactform .formBox .inputBox input:focus ~ span,
+/* .Form .contactform .formBox .inputBox input:focus ~ span,    
 .Form .contactform .formBox .inputBox input:valid ~ span,
 .Form .contactform .formBox .inputBox textarea:focus ~ span,
 .Form .contactform .formBox .inputBox textarea:valid ~ span{
     transform: translateY(-30px);
     font-size: 14px;
-}
+} */
 .Form .contactform .formBox .inputBox input[type="submit"]{
     position: relative;
     cursor: pointer;
