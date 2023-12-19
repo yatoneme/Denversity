@@ -18,32 +18,41 @@ University.post('/doctors', (req, res) => {
 
         const university = data.docs[0].data()
 
-        doctorsCollection.where("university", "==", university.name).get().then(data => {
-            const doctors = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-            const doctors_emails = doctors.map(doctor => doctor.email)
-
             db.collection('appointments').where("is_accepted", "==", false).where("request_sent_at", "!=", null).where("university_name", "==", university.name).get().then(data => {
                 const pendingRequests = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
 
                 db.collection('categories').get().then(data => {
                     const categories = data.docs.map(category => category.data().name)
+ 
+                    doctorsCollection.where("university", "==", university.name).get().then(data => {
+                        if(data.empty)
+                            return res.status(200).send({
+                                displayName: req.user.name,
+                                university,
+                                doctors: [],
+                                pendingRequests,
+                                categories
+                            })
+            
+                        const doctors = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
+                        const doctors_emails = doctors.map(doctor => doctor.email)
+                        
+                        db.collection('specialties').where("student_email", "in", doctors_emails).get().then(data => {
+                            const specialty_array = data.docs.map(doc => doc.data())
+                            const finalDoctors = doctors.map(doctor => {
+                                const doctor_specialties = specialty_array.filter(specialty => specialty.student_email === doctor.email)
 
-                    db.collection('specialties').where("student_email", "in", doctors_emails).get().then(data => {
-                        const specialty_array = data.docs.map(doc => doc.data())
-                        const finalDoctors = doctors.map(doctor => {
-                            const doctor_specialties = specialty_array.filter(specialty => specialty.student_email === doctor.email)
+                                return { ...doctor, doctor_specialties }
+                            })
 
-                            return { ...doctor, doctor_specialties }
+                            res.status(200).send({
+                                displayName: req.user.name,
+                                university,
+                                doctors: finalDoctors,
+                                pendingRequests,
+                                categories
+                            })
                         })
-
-                        res.status(200).send({
-                            displayName: req.user.name,
-                            university,
-                            doctors: finalDoctors,
-                            pendingRequests,
-                            categories
-                        })
-                    })
                 })
 
 

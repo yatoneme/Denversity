@@ -2,13 +2,13 @@ window.onload = () => {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
     const category = params.get('cat')
+    const caseT = localStorage.getItem('currentCategory')
 
-    if(!category){
+    if(!category)
         window.location.href = "categories.html";
-    }
 
     const caseType = document.getElementById("header-case-type")
-    caseType.innerHTML = "Type: " + localStorage.getItem('currentCategory')
+    caseType.innerHTML = "Type: " + caseT
 
     fetch('http://localhost:3000/universities', {
         method: "GET",
@@ -30,7 +30,17 @@ window.onload = () => {
 
     document.getElementById("appointment-date").min = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`
     document.getElementById("appointment-date").max = `${nextYear}-${nextMonth < 10 ? `0${nextMonth}` : nextMonth}-${dayNextMonth < 10 ? `0${dayNextMonth}` : dayNextMonth}`
-    document.getElementById("bd").max = `${year - 1}-01-01`
+
+    // Only youth ( <= 16 y.o ).
+    if(caseT === "Pediatric dentistry"){
+        document.getElementById("bd").max = `${year - 1}-01-01`
+        document.getElementById("bd").min = `${year - 16}-01-01`
+    } else {
+        // Only above 16 years old.
+        document.getElementById("bd").max = `${year - 15}-01-01`
+    }
+
+
 }
 
 function renderUniversityList({ data }) {

@@ -164,6 +164,8 @@ function declineCase(patient) {
 
 function renderCategories(categories) {
     const categories_container = document.getElementById("categories-select")
+    const categories_super_container = document.createElement('div')
+    categories_super_container.id = "categories-super-container"
 
     categories.forEach(category => {
         const categoryBox = document.createElement("input")
@@ -176,9 +178,11 @@ function renderCategories(categories) {
         categoryBox.type = "checkbox"
         categoryBox.value = category
 
-        categories_container.appendChild(label)
-        categories_container.appendChild(categoryBox)
+        categories_super_container.appendChild(label)
+        categories_super_container.appendChild(categoryBox)
     })
+
+    categories_container.appendChild(categories_super_container)
 }
 
 function renderDoctorsTable(doctors) {    
@@ -351,7 +355,7 @@ function addToTable(doctor, tbody, atIndex) {
         }
     })
 
-    cel3.style.fontSize = "10px"
+    cel3.style.fontSize = "12px"
 
     cel4.innerHTML = `<input type="button" name="Del" value="Delete" onclick="delStudent('${doctor.name}', '${doctor.email}', this.parentNode.parentNode);" class="btn btn-danger">`;
 }

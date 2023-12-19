@@ -541,6 +541,11 @@ input[type=time] {
     color:rgb(2, 0, 8);
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
+#categories-super-container {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
 .uniform {
     border-radius: 15px;
     margin-left:15px;
