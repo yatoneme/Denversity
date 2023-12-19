@@ -11,7 +11,7 @@ window.onload = () => {
 function renderCategoryPage({ data }) { // render on page as front end "components"
     const catBody = document.getElementsByClassName("categoriesbody")[0]
 
-    data.map(({ name, description }, idx) => {
+    data.forEach(({ name, description }, idx) => {
         const cell = document.createElement('div')        
         const title = document.createElement('h2')
         const descr = document.createElement('p')

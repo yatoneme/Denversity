@@ -6,11 +6,10 @@ logoImage.addEventListener('click', function() {
 window.onload = () => {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
-
     
-    if(params.get('successfulAppointment') && document.referrer !== '' && document.referrer !== window.location.href){
+    // Check if the user is redirected from another page, with successfulAppointment 
+    if(params.get('successfulAppointment') && document.referrer !== '' && document.referrer !== window.location.href)
         setNotification(true)
-    }
 
     fetch('http://localhost:3000/universities', {
         method: "GET",
@@ -23,11 +22,11 @@ window.onload = () => {
 
 function renderUniversities({ data }) {
     const uniList = document.getElementsByClassName('university-list')[0]
-    data.map(({ name, link }, idx) => {
+    data.forEach(({ name, link }, idx) => {
         const cell = document.createElement('li')
         const uniLink = document.createElement('a')
 
-        uniLink.href = link
+        uniLink.href = `clinics_details/${link}`
         uniLink.target = "_blank"
         uniLink.innerHTML = name
 
