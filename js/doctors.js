@@ -83,8 +83,8 @@ function renderTables(types) {
 
             const timeJs = new Date(`1970-01-01T${patient.time}`).toLocaleTimeString()
             const scheduleTimeSearch = new RegExp(/([0-9]{1,2}:[0-9]{2})(:[0-9]{2}) (AM|PM)/).exec(timeJs)
-
-            const scheduleTime = scheduleTimeSearch ? (scheduleTimeSearch[1] + scheduleTimeSearch[3].toLowerCase()) : timeJs            
+            const scheduleTime = scheduleTimeSearch ? (scheduleTimeSearch[1] + scheduleTimeSearch[3].toLowerCase()) : timeJs
+            
             category.innerHTML = patient.problem_category
             patientDetails.innerHTML = `${patient.fullname}, ${age}, ${patient.gender}`
             schedule.innerHTML = `Schedule: ${patient.appointment_date}, at: ${scheduleTime}`
