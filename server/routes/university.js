@@ -5,7 +5,9 @@ const express = require('express')
 const University = express.Router()
 
 University.post('/doctors', (req, res) => {
+    // TODO: Make pages for history
     const { email } = req.user
+    const { page_no = 1, width = 30 } = req.body 
     const db = getFirestore()
     const doctorsCollection = db.collection('doctors')
     const universitiesCollection = db.collection('university')
@@ -22,7 +24,7 @@ University.post('/doctors', (req, res) => {
 
             db.collection('appointments').where("is_accepted", "==", false).where("request_sent_at", "!=", null).where("university_name", "==", university.name).get().then(data => {
                 const pendingRequests = data.docs.map(doc => ({ ...doc.data(), id: doc.id }))
-                
+
                 db.collection('categories').get().then(data => {
                     const categories = data.docs.map(category => category.data().name)
 
@@ -58,7 +60,7 @@ University.post('/add-doctor', (req, res) => {
     const db = getFirestore()
     const doctorsCollection = db.collection('doctors')
     const specialtyCollection = db.collection('specialties')
-    const { password, selectedSpecialties, ...no_password_doctor } = new_doctor
+    const { password, doctor_specialties, ...no_password_doctor } = new_doctor
 
     getAuth().createUser({
         email: new_doctor.email,
@@ -67,7 +69,7 @@ University.post('/add-doctor', (req, res) => {
         doctorsCollection.add(no_password_doctor).then(async doctor => {
             const batch = db.batch()
             
-            await selectedSpecialties.forEach(async specialty => {
+            await doctor_specialties.forEach(async specialty => {
                 const docRef = await specialtyCollection.doc()
 
                 batch.create(docRef, { 
@@ -104,15 +106,31 @@ University.delete('/doctor', (req, res) => {
 
         auth.deleteUser(doctor.uid).then(() => {
             doctorsCollection.where("email", "==", doctor_email).limit(1).get().then(data => {
-                data.docs[0].ref.delete().then(() => res.sendStatus(200));
+                data.docs[0].ref.delete().then(() => {
+                    const specialtiesCollection = db.collection('specialties')
+
+                    specialtiesCollection.where('student_email', "==", doctor_email).get().then(data => {
+                        const batch = db.batch()
+
+                        data.docs.forEach(async doc => {
+                            const docRef = specialtiesCollection.doc(doc.id);
+
+                            batch.delete(docRef);
+                        })
+                        batch.commit().then(() => {
+                            res.sendStatus(200)
+                        })
+                    })
+                });
             })
         })
     }).catch(e => {
         if(e.code === 'auth/user-not-found')
             return res.sendStatus(404)
-        console.error(eZZ)
-    })
 
+        console.error(e)
+        res.sendStatus(400)
+    })
 })
 
 const updateAppointmentStatus = (req, res, next) => {
@@ -126,9 +144,13 @@ const updateAppointmentStatus = (req, res, next) => {
             return res.sendStatus(400)
 
         const doctor = data.docs[0].data()
-        const newAppointmentObj = {
+        const newAppointmentObj = req.path === "/accept" ? {
             is_accepted: true,
             accepted_at: new Date().toISOString()
+        } : {
+            doctor_email: "",
+            request_sent_at: null,
+            on_queue: true
         }
 
         req.dbuser = {
@@ -167,5 +189,12 @@ const sendAcceptEmail = (req, res, next) => {
 }
 
 University.put('/accept', updateAppointmentStatus, sendAcceptEmail)
+University.put('/reject', updateAppointmentStatus, (req, res) => res.sendStatus(200))
 
 module.exports = University;
+
+// TODO: Cron job -> Email for rescheduling
+// and Remove completed cases every year ( maybe?? )
+// TODO: Before removing the student, make sure the doctor transfers that student's accepted cases to another student, and notify him by using the color gold!
+// TODO: Implement student request denial feature
+// TODO: Implement history for moderators

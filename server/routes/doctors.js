@@ -36,9 +36,8 @@ const getAppointments = (req, res) => {
         })
     }).catch(e => {
         console.error(e)
-        res.sendStatus(500)
+        res.sendStatus(400)
     })
-
 }
 
 const updateAppointmentStatus = (req, res, next) => {
@@ -53,11 +52,7 @@ const updateAppointmentStatus = (req, res, next) => {
             return res.sendStatus(400)
 
         const doctor = data.docs[0].data()
-        const newAppointmentObj = req.path === "/accept" 
-        ? {
-            doctor_email: doctor.email,
-            on_queue: false
-        } : {
+        const newAppointmentObj = {
             is_complete: true
         }
 
@@ -93,7 +88,7 @@ const requestAcceptFromAdmin = (req, res, next) => {
             doctor_email: doctor.email,
             on_queue: false,
             is_accepted: false,
-            request_sent_at: new Date().toISOString()
+            request_sent_at: new Date().toISOString(),
         }
 
         req.dbuser = {
@@ -101,7 +96,14 @@ const requestAcceptFromAdmin = (req, res, next) => {
             name: doctor.name
         }
 
-        db.collection('appointments').doc(caseId).update(newAppointmentObj).then(() => next())
+        db.collection('appointments').doc(caseId).get().then(data => {
+            const doc = data.data()
+
+            if(doc.doctor_email !== "" || doc.doctor_email !== null)
+                return res.sendStatus(409)
+
+            data.ref.update(newAppointmentObj).then(() => next())
+        })
         .catch(e => {
             console.error(e)
             res.sendStatus(400)
@@ -150,11 +152,6 @@ const sendRemovedAppointmentEmail = (req, res, next) => {
 
 Doctors.post('/', getAppointments)
 Doctors.delete('/remove-case/*', sendRemovedAppointmentEmail, deleteCase, getAppointments)
-
-// TODO: Add for admin
-// TODO: Add timestamp for each stage
-// Doctors.put('/accept', updateAppointmentStatus, sendAcceptEmail, getAppointments)
-
 Doctors.put('/accept', requestAcceptFromAdmin, getAppointments)
 Doctors.put('/complete', updateAppointmentStatus, getAppointments)
 

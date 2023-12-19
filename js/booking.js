@@ -18,9 +18,12 @@ window.onload = () => {
         }
     }).then(res => res.json()).then(data => renderUniversityList(data))
 
+    // Min values
     const year = new Date().getFullYear()
     const month = new Date().getMonth() + 1
-    const day = new Date().getDate()
+    const day = new Date().getDate() + 1
+
+    // Max values, within a month
     const dayNextMonth = new Date(year, month, day).getDate()
     const nextMonth = new Date(year, month, day).getMonth() + 1
     const nextYear = new Date(year, month, day).getFullYear()
@@ -71,10 +74,8 @@ function sendform(e){
         }
     }).then(res =>  {
         sub.disabled = false;
-        if(!res.ok){
-            sub.disabled = false;
+        if(!res.ok)
             return false;
-        }
         else
             window.location.href = 'front.html?successfulAppointment=1';
     }).catch(e => false)

@@ -125,8 +125,41 @@ function confirmCase(patient) {
     })
 }
 
-function declineCase(request) {
-    console.log(request);
+function declineCase(patient) {
+    firebase.auth().onAuthStateChanged( user => {
+        if(!user)
+        {
+            window.location.href = "universitylogin.html"
+            return false
+        }
+
+        firebase.auth().currentUser.getIdToken(true).then(token => {
+            fetch(`http://localhost:3000/university/reject`, {
+                method: "PUT",
+                body: JSON.stringify({
+                    role: 'university',
+                    userId: token,
+                    caseId: patient.id,
+                    student_email: patient.doctor_email
+                }),
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(res => {
+                if(!res.ok)
+                {
+                    setNotification(false, "Cannot reject that appointment!")
+                    return
+                }
+                const row = document.getElementById(patient.id)
+
+                setNotification(true, "Request is denied successfully!")
+                row.remove()
+            })
+
+        })
+    })
 }
 
 function renderCategories(categories) {
@@ -186,7 +219,7 @@ function savedata() {
       email: document.getElementById("semail").value,
       university: window.loggedInUniversity.name,
       password: document.getElementById("spassword").value,
-      selectedSpecialties
+      doctor_specialties: selectedSpecialties
     };
     
     storeNewDoctor(doctor).then(() => {
@@ -311,7 +344,7 @@ function addToTable(doctor, tbody, atIndex) {
     
     doctor.doctor_specialties.forEach((specialty, idx) => {
         
-        cel3.innerHTML += specialty.specialty;
+        cel3.innerHTML += specialty.specialty || specialty;
         
         if(idx !== doctor.doctor_specialties.length - 1){
             cel3.innerHTML += ',';
