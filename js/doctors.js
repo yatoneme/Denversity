@@ -249,7 +249,7 @@ function updateDoctorDisplay(doctor) {
     const email = document.createElement('h3')
     const university = document.createElement('h3')
 
-    name.innerHTML = "Dr. " + doctor.name
+    name.innerHTML = "Student: " + doctor.name
     email.innerHTML = doctor.email
     university.innerHTML = "University: " + doctor.university
 

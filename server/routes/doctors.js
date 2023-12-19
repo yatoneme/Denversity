@@ -99,10 +99,10 @@ const requestAcceptFromAdmin = (req, res, next) => {
         db.collection('appointments').doc(caseId).get().then(data => {
             const doc = data.data()
 
-            if(doc.doctor_email !== "" || doc.doctor_email !== null)
-                return res.sendStatus(409)
-
-            data.ref.update(newAppointmentObj).then(() => next())
+            if(!doc.doctor_email)
+                return data.ref.update(newAppointmentObj).then(() => next())
+            
+            return res.sendStatus(409)
         })
         .catch(e => {
             console.error(e)

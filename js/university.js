@@ -48,7 +48,8 @@ window.onload = () => {
     })
 }
 
-function renderPendingRequestsTable(requests) {    
+function renderPendingRequestsTable(requests) {  
+
     const table = document.getElementById("std_history");
     requests.forEach(request => {
         const row = document.createElement('tr')
@@ -56,10 +57,13 @@ function renderPendingRequestsTable(requests) {
         const cel1 = document.createElement('td')
         const cel2 = document.createElement('td')
         const cel3 = document.createElement('td')
+        const cel4 = document.createElement('td')
         const confirmBtn = document.createElement('button')
         const rejectBtn = document.createElement('button')
         const timedate = new Date(request.request_sent_at)
-        const requestedAt = `${timedate.toDateString()} at ${timedate.toLocaleTimeString()}`
+        const appointmentTimedate = new Date(`${request.appointment_date}T${request.time}`)
+        const requestedAt = `Requested at: ${timedate.toDateString()}`
+        const appointmentAt = `Time: ${appointmentTimedate.toLocaleTimeString()}`
 
         confirmBtn.className = "accept-request-btn"
         confirmBtn.onclick = e => confirmCase(request)
@@ -67,19 +71,22 @@ function renderPendingRequestsTable(requests) {
 
         rejectBtn.className = "decline-request-btn"
         rejectBtn.onclick = e => declineCase(request)
-        confirmBtn.title = "Decline the request"
+        rejectBtn.title = "Decline the request"
 
         row.id = request.id
         cel1.innerHTML = `<p class="student-request-category">${request.problem_category}</p>`
-        cel2.innerHTML = `<div class="student-request-details"><p>${request.doctor_email}</p><p>${requestedAt}</p></div>`
+        cel2.innerHTML = `<div class="student-request-details"><p>${request.doctor_email}</p><p>${requestedAt}</p><p>${timedate.toLocaleTimeString()}</p></div>`
         confirmBtn.innerHTML = `<svg fill= "white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>`
         rejectBtn.innerHTML = `<svg fill="white" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>`
 
+        cel3.innerHTML = `<div class="student-request-details"><p>Appointment date: ${request.appointment_date}</p><p>${appointmentAt}</p></div>`
+
         row.appendChild(cel1)
         row.appendChild(cel2)
-        cel3.appendChild(confirmBtn)
-        cel3.appendChild(rejectBtn)
         row.appendChild(cel3)
+        cel4.appendChild(confirmBtn)
+        cel4.appendChild(rejectBtn)
+        row.appendChild(cel4)
         table.appendChild(row)
     })
 }

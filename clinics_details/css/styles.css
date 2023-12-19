@@ -1,0 +1,92 @@
+.clinic {
+    font-family: Arial, sans-serif;
+    background-color: rgb(218, 228, 232);;
+    margin: 0;
+    padding: 0;
+  }
+  .clinic-overview {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  h1 {
+    font-size: 33px;
+    text-align: center;
+    color: #333;
+    
+  }
+  .dash {
+    border: none;
+    border-top: 2px dashed  #574f4f;
+    margin: 20px 40px;
+    text-align: left;
+    margin-left: 0%;
+    width: 50%;
+  }
+  h3{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: #575555;
+    }
+ img {
+      display: block;
+      margin: 20px auto;
+      max-width: 100%;
+      height: auto;
+    }
+ul {
+     padding: -50px;
+     list-style:disc;
+    padding: 0;
+    font-size: 20px;
+     }
+.li1{
+    color: #555;
+    font-size: 16px;
+    font-weight:none;
+    padding-top: -26px;
+    padding-left: 3px;
+    padding-bottom: 0%;
+    }
+ ul ol li {
+      color: #555;
+      font-size: 16px;
+      font-weight:none;
+      /*font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;*/
+      }
+      
+ul li {
+    color:#555;
+        /*font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
+    padding: 5px 0;
+    font-size: 18px;
+      }
+      
+h2 {
+     margin-top: 20px;
+    color:rgb(29, 106, 109);
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+      
+p {
+     color: #555;}
+.pic2{
+    position: absolute;
+    display: block;
+    bottom: -95%;
+    right: 16px;
+    width: 25%;
+    margin: 110px 25%; }
+ol {
+    color:#555;}
+.contactc{
+     padding-top: 25px;}
+.straight {
+    border: none;
+    border-top: 2px solid #504b4b ; 
+    margin: 20px 40px;
+    text-align: left;
+    margin-left: 5%;
+    margin-right: 5%;
+     width: 85%;}
