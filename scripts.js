@@ -34,3 +34,6 @@ function renderUniversities({ data }) {
         uniList.appendChild(cell);
     })
 }
+
+
+
