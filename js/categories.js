@@ -1,14 +1,14 @@
 window.onload = () => {
-    fetch('http://localhost:3000/categories', {
+    fetch('http://localhost:3000/categories', { // fetch cats
         method: "GET",
         mode: "cors",
-        headers: {
+        headers: { // return json
             "Content-Type": "application/json"
         }
     }).then(res => res.json()).then(data => renderCategoryPage(data))
 }
 
-function renderCategoryPage({ data }) {
+function renderCategoryPage({ data }) { // render on page as front end "components"
     const catBody = document.getElementsByClassName("categoriesbody")[0]
 
     data.map(({ name, description }, idx) => {
@@ -18,19 +18,19 @@ function renderCategoryPage({ data }) {
         const btn = document.createElement('button')
         const bookLink = document.createElement('a')
 
-        cell.className = "card card-" + (idx+1);
+        cell.className = "card card-" + (idx+1); //links classes
         btn.className = "btn"
         btn.innerHTML = "Book now"
 
         btn.onclick = e => {
-            localStorage.setItem('currentCategory', name)
+            localStorage.setItem('currentCategory', name) // onclick store selected cat in a local storage
         }
 
-        bookLink.href = "booking.html?cat=" + name;
+        bookLink.href = "booking.html?cat=" + name; // adds corresponding links to universties
         title.innerHTML = name;
         descr.innerHTML = description;
 
-        cell.appendChild(title);
+        cell.appendChild(title); // appends childs to parents
         cell.appendChild(descr);
         bookLink.appendChild(btn);
         cell.appendChild(bookLink);

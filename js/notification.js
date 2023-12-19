@@ -1,9 +1,9 @@
-const defaultText = {
+const defaultText = { //notification message
     success: "Appointment is successfully sent!",
     fail: "Sorry, an error has occured"
 }
 
-function setNotification(data, text) {
+function setNotification(data, text) { // manage notification content
     const notification = document.getElementById("notification");
     const notiText = notification.querySelector("#text")
     notiText.innerHTML = 

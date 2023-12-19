@@ -83,6 +83,7 @@ function renderTables(types) {
 
             const timeJs = new Date(`1970-01-01T${patient.time}`).toLocaleTimeString()
             const scheduleTimeSearch = new RegExp(/([0-9]{1,2}:[0-9]{2})(:[0-9]{2}) (AM|PM)/).exec(timeJs)
+            console.log(timeJs);
             const scheduleTime = scheduleTimeSearch[1] + scheduleTimeSearch[3].toLowerCase()
             
             category.innerHTML = patient.problem_category

@@ -1,11 +1,11 @@
-function login(role, redirectPage) {
+function login(role, redirectPage) {   // init login functionality 
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
-    if (email === "") {
+    if (email === "") { // check email empty
         alert("Please Enter Email");
         return;
     }
-    else if (password === "") {
+    else if (password === "") { // check pw empty
         alert("Please Enter Password");
         return;
     }
@@ -22,15 +22,15 @@ function login(role, redirectPage) {
                     headers: {
                         "Content-Type": "application/json"
                     }
-                }).then(res => {
+                }).then(res => { // checks for token timeout 
                     if(!res.ok)
                         return setNotification(false, 'Invalid email or password')
     
-                    window.location.href = redirectPage
+                    window.location.href = redirectPage 
                 })
 
             })
-        }).catch(error => {
+        }).catch(error => { // checks if user is signed in already or not
             switch(error.code){
                 case 'auth/invalid-email':
                 case 'auth/invalid-login-credentials':
