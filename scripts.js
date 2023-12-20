@@ -6,10 +6,14 @@ logoImage.addEventListener('click', function() {
 window.onload = () => {
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
-    
+
     // Check if the user is redirected from another page, with successfulAppointment 
     if(params.get('successfulAppointment') && document.referrer !== '' && document.referrer !== window.location.href)
         setNotification(true)
+    else if(params.get('successfulFeedback') === "true" && document.referrer !== '' && document.referrer !== window.location.href)
+        setNotification(true, "Thanks for sharing your feedback!")
+    else if(params.get('successfulFeedback') === "false" && document.referrer !== '' && document.referrer !== window.location.href)
+        setNotification(false, "Sorry, try again later!")
 
     fetch('http://localhost:3000/universities', {
         method: "GET",
